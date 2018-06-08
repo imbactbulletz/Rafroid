@@ -2,4 +2,11 @@
     <string name="app_name">RAFroid</string>
     <string name="settings">Postavke</string>
     <string name="about">O Aplikaciji</string>
+    <string name="error_connecting_to_server">Greska prilikom konekcije</string>
+    <string name="checking_for_update">Proveravam najnoviju verziju</string>
+    <string name="updating_exams">Azuriranje Testova</string>
+    <string name="updating_classes">Azuriranje Predavanja</string>
+    <string name="update_calender">Azuriram Kalendar</string>
+    <string name="update_consultations">Azuriram Konsultacije</string>
+    <string name="update_news">Azuriram Novosti</string>
 </resources>

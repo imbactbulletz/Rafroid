@@ -15,6 +15,7 @@ import com.binarylab.rafroid.viewmodel.VMSplashScreen;
 public class SplashScreenFragment extends Fragment {
 
     FragmentSplashscreenBinding mBinding;
+    VMSplashScreen mVMSplashScreen;
 
     public static SplashScreenFragment newInstance() {
         return new SplashScreenFragment();
@@ -28,7 +29,8 @@ public class SplashScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_splashscreen, container, false);
-        mBinding.setVm(new VMSplashScreen());
+        mVMSplashScreen = new VMSplashScreen(getContext());
+        mBinding.setVm(mVMSplashScreen);
         return mBinding.getRoot();
     }
 

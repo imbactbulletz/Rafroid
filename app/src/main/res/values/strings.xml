@@ -2,5 +2,4 @@
     <string name="app_name">RAFroid</string>
     <string name="settings">Postavke</string>
     <string name="about">O Aplikaciji</string>
-    <string name="nav_header_title">@string/app_name</string>
 </resources>

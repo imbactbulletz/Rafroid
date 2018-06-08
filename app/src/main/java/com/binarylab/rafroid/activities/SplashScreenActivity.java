@@ -10,6 +10,8 @@ import com.binarylab.rafroid.fragments.SplashScreenFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import io.realm.Realm;
+
 public class SplashScreenActivity extends SingleFragmentActivity {
 
     @Override
@@ -22,6 +24,9 @@ public class SplashScreenActivity extends SingleFragmentActivity {
         super.onCreate(savedInstanceState);
 
         EventBus.getDefault().register(this);
+
+        // Initialize Realm (just once per application)
+        Realm.init(getApplicationContext());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.binarylab.rafroid.util;
 
+import android.content.Intent;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,6 +44,20 @@ public class DateUtil {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, minutes);
+
+        return calendar.getTime();
+    }
+
+    public static Date parseDate(String date){
+
+        int year = Integer.valueOf(date.split("\\.")[2]);
+        int month = Integer.valueOf(date.split("\\.")[1]);
+        int day = Integer.valueOf(date.split("\\.")[0]);
+
+        Calendar calendar =  Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
 
         return calendar.getTime();
     }

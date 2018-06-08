@@ -1,5 +1,5 @@
 package com.binarylab.rafroid.model;
 
-public enum CalenderType {
+public enum CalendarType {
     SEMESTER, HOLIDAY, CURRICULUMS, EXAMS
 }

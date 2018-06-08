@@ -6,8 +6,10 @@ import android.os.AsyncTask;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.api.ApiImpl;
+import com.binarylab.rafroid.dao.CalendarDAO;
 import com.binarylab.rafroid.dao.ClassScheduleDAO;
 import com.binarylab.rafroid.dao.ExamDAO;
+import com.binarylab.rafroid.dto.CalendarsDTO;
 import com.binarylab.rafroid.dto.ClassesDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
 import com.binarylab.rafroid.dto.VersionDTO;
@@ -83,13 +85,13 @@ public class DatabaseUpdateService extends AsyncTask {
         messageService.setMessage(mContext.getString(R.string.updating_classes));
         VersionDTO vdto = api.classesVersion();
 
-        if (vdto.getVersion() > mSharedPreferences.getInt(SharedPreferencesKeyStore.CLASSES_VERION, 0)) {
+        if (vdto.getVersion() > mSharedPreferences.getInt(SharedPreferencesKeyStore.CLASSES_VERSION, 0)) {
 
             ClassesDTO dto = api.getClasses();
             ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
             dao.clear();
             dao.saveClassScheduleFromDTO(dto);
-            ed.putInt(SharedPreferencesKeyStore.CLASSES_VERION, vdto.getVersion());
+            ed.putInt(SharedPreferencesKeyStore.CLASSES_VERSION, vdto.getVersion());
             ed.apply();
 
         }
@@ -97,8 +99,19 @@ public class DatabaseUpdateService extends AsyncTask {
 
     private void checkCalenderVersion() throws IOException {
         messageService.setMessage(mContext.getString(R.string.update_calender));
-        VersionDTO dto = api.calenderVersion();
-        //TODO: Update database
+
+        VersionDTO vdto = api.classesVersion();
+
+        if (vdto.getVersion() > mSharedPreferences.getInt(SharedPreferencesKeyStore.CALENDAR_VERSION, 0)) {
+
+            CalendarsDTO dto = api.getCalendars();
+            CalendarDAO dao = CalendarDAO.getInstance();
+            dao.clear();
+            dao.saveCalendarsFromDTO(dto);
+            ed.putInt(SharedPreferencesKeyStore.CALENDAR_VERSION, vdto.getVersion());
+            ed.apply();
+
+        }
     }
 
     private void checkConsultationsVersion() throws IOException {

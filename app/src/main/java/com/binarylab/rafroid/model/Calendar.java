@@ -4,7 +4,7 @@ import java.util.Date;
 
 import io.realm.RealmObject;
 
-public class Calender extends RealmObject{
+public class Calendar extends RealmObject{
 
     private Date startDate;
     private Date endDate;
@@ -28,11 +28,11 @@ public class Calender extends RealmObject{
         this.endDate = endDate;
     }
 
-    public CalenderType getType() {
-        return CalenderType.valueOf(type);
+    public CalendarType getType() {
+        return CalendarType.valueOf(type);
     }
 
-    public void setType(CalenderType type) {
+    public void setType(CalendarType type) {
         this.type = type.toString();
     }
 }

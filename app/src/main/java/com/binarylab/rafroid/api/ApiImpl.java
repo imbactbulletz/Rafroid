@@ -1,5 +1,6 @@
 package com.binarylab.rafroid.api;
 
+import com.binarylab.rafroid.dto.ClassesDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
 import com.binarylab.rafroid.dto.VersionDTO;
 import com.binarylab.rafroid.services.ServicesGenerator;
@@ -52,6 +53,11 @@ public class ApiImpl {
 
     public ExamsDTO getExams() throws IOException{
         Call<ExamsDTO> call = api.getExams();
+        return call.execute().body();
+    }
+
+    public ClassesDTO getClasses() throws IOException{
+        Call<ClassesDTO> call = api.getClasses();
         return call.execute().body();
     }
 }

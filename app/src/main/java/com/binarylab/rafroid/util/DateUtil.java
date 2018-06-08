@@ -21,8 +21,30 @@ public class DateUtil {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR, hour);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
         return calendar.getTime();
     }
+
+    public static Date parseTime(String date_time, boolean isStart){
+
+        int hours;
+        int minutes;
+
+        if(isStart){
+            String tmp = date_time.split("-")[0];
+            hours = Integer.valueOf(tmp.substring(0,tmp.indexOf(":")));
+            minutes = Integer.valueOf(tmp.substring(tmp.length()-2, tmp.length()));
+        }else{
+            hours = Integer.valueOf(date_time.split("-")[1]);
+            minutes = 0;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        calendar.set(Calendar.MINUTE, minutes);
+
+        return calendar.getTime();
+    }
+
 
 }

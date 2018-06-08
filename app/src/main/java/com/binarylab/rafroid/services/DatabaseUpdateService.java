@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.api.ApiImpl;
-import com.binarylab.rafroid.dao.ExamsDAO;
+import com.binarylab.rafroid.dao.ClassScheduleDAO;
+import com.binarylab.rafroid.dao.ExamDAO;
+import com.binarylab.rafroid.dto.ClassesDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
 import com.binarylab.rafroid.dto.VersionDTO;
 import com.binarylab.rafroid.util.SharedPreferencesKeyStore;
@@ -68,7 +70,7 @@ public class DatabaseUpdateService extends AsyncTask {
         if (vdto.getVersion() > mSharedPreferences.getInt(SharedPreferencesKeyStore.EXAMS_VERSION, 0)) {
 
             ExamsDTO dto = api.getExams();
-            ExamsDAO dao = ExamsDAO.getInstance();
+            ExamDAO dao = ExamDAO.getInstance();
             dao.clear();
             dao.saveExamsFromDTO(dto);
             ed.putInt(SharedPreferencesKeyStore.EXAMS_VERSION, vdto.getVersion());
@@ -79,8 +81,18 @@ public class DatabaseUpdateService extends AsyncTask {
 
     private void checkClassesVersion() throws IOException {
         messageService.setMessage(mContext.getString(R.string.updating_classes));
-        VersionDTO dto = api.classesVersion();
-        //TODO: Update database
+        VersionDTO vdto = api.classesVersion();
+
+        if (vdto.getVersion() > mSharedPreferences.getInt(SharedPreferencesKeyStore.CLASSES_VERION, 0)) {
+
+            ClassesDTO dto = api.getClasses();
+            ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
+            dao.clear();
+            dao.saveClassScheduleFromDTO(dto);
+            ed.putInt(SharedPreferencesKeyStore.CLASSES_VERION, vdto.getVersion());
+            ed.apply();
+
+        }
     }
 
     private void checkCalenderVersion() throws IOException {

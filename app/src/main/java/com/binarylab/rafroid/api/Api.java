@@ -1,5 +1,6 @@
 package com.binarylab.rafroid.api;
 
+import com.binarylab.rafroid.dto.ClassesDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
 import com.binarylab.rafroid.dto.VersionDTO;
 import com.binarylab.rafroid.services.ServicesGenerator;
@@ -35,4 +36,8 @@ public interface Api {
     @Headers("apikey: "+ServicesGenerator.apikey)
     @GET("exams")
     Call<ExamsDTO> getExams();
+
+    @Headers("apikey: "+ServicesGenerator.apikey)
+    @GET("classes")
+    Call<ClassesDTO> getClasses();
 }

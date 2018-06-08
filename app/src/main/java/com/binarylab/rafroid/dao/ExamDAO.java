@@ -8,15 +8,15 @@ import com.binarylab.rafroid.util.DateUtil;
 
 import io.realm.Realm;
 
-public class ExamsDAO {
+public class ExamDAO {
 
-    private static ExamsDAO instance;
+    private static ExamDAO instance;
 
-    private ExamsDAO(){}
+    private ExamDAO(){}
 
-    public static ExamsDAO getInstance() {
+    public static ExamDAO getInstance() {
         if(instance == null)
-            instance = new ExamsDAO();
+            instance = new ExamDAO();
         return instance;
     }
 

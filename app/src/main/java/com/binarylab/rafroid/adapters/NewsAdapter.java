@@ -26,7 +26,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     private List<News> newsLis;
     private Context context;
 
-    private static int currentPosition = 0;
+    private static int currentPosition = -1;
     private static int lastPosition = -1;
     private SimpleDateFormat mFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -64,7 +64,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             holder.icon_expand.animate().rotation(180).start();
         }
 
-        holder.icon_expand.setOnClickListener(new View.OnClickListener() {
+        holder.clRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

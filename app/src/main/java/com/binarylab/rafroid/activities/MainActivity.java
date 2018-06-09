@@ -13,12 +13,16 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
+import com.binarylab.rafroid.fragments.NewsFragment;
+
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            //TODO: Add default fragment
+            fragmentTransaction.add(R.id.fragment_container, NewsFragment.newInstance());
+            fragmentTransaction.commit();
         }
 
         if(getIntent().getExtras() != null && getIntent().getExtras().getBoolean("showConnectionError")){

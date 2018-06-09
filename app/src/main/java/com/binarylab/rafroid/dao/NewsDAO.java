@@ -9,6 +9,8 @@ import com.binarylab.rafroid.model.ExamType;
 import com.binarylab.rafroid.model.News;
 import com.binarylab.rafroid.util.DateUtil;
 
+import java.util.List;
+
 import io.realm.Realm;
 
 public class NewsDAO {
@@ -44,5 +46,10 @@ public class NewsDAO {
 
         realm.commitTransaction();
 
+    }
+
+    public List<News> getAll(){
+        Realm realm = Realm.getDefaultInstance();
+        return realm.where(News.class).findAll();
     }
 }

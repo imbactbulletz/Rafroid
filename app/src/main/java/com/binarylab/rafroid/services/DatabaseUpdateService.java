@@ -8,9 +8,12 @@ import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.api.ApiImpl;
 import com.binarylab.rafroid.dao.CalendarDAO;
 import com.binarylab.rafroid.dao.ClassScheduleDAO;
+import com.binarylab.rafroid.dao.ConsultationDAO;
 import com.binarylab.rafroid.dao.ExamDAO;
 import com.binarylab.rafroid.dto.CalendarsDTO;
 import com.binarylab.rafroid.dto.ClassesDTO;
+import com.binarylab.rafroid.dto.ConsultationDTO;
+import com.binarylab.rafroid.dto.ConsultationsDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
 import com.binarylab.rafroid.dto.VersionDTO;
 import com.binarylab.rafroid.util.SharedPreferencesKeyStore;
@@ -100,7 +103,7 @@ public class DatabaseUpdateService extends AsyncTask {
     private void checkCalenderVersion() throws IOException {
         messageService.setMessage(mContext.getString(R.string.update_calender));
 
-        VersionDTO vdto = api.classesVersion();
+        VersionDTO vdto = api.calenderVersion();
 
         if (vdto.getVersion() > mSharedPreferences.getInt(SharedPreferencesKeyStore.CALENDAR_VERSION, 0)) {
 
@@ -116,8 +119,18 @@ public class DatabaseUpdateService extends AsyncTask {
 
     private void checkConsultationsVersion() throws IOException {
         messageService.setMessage(mContext.getString(R.string.update_consultations));
-        VersionDTO dto = api.consultationVersion();
-        //TODO: Update database
+        VersionDTO vdto = api.consultationVersion();
+
+        if (vdto.getVersion() > mSharedPreferences.getInt(SharedPreferencesKeyStore.CONSULTATIONS_VERSION, 0)) {
+
+            ConsultationsDTO dto = api.getConsultations();
+            ConsultationDAO dao = ConsultationDAO.getInstance();
+            dao.clear();
+            dao.saveConsultationsFromDTO(dto);
+            ed.putInt(SharedPreferencesKeyStore.CONSULTATIONS_VERSION, vdto.getVersion());
+            ed.apply();
+
+        }
     }
 
     private void checkNewsVersion() throws IOException {

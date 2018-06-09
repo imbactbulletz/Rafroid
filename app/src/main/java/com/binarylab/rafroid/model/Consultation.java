@@ -5,7 +5,7 @@ import java.util.Date;
 
 import io.realm.RealmObject;
 
-public class Consulation extends RealmObject {
+public class Consultation extends RealmObject {
 
     private String day;
     private Date startTime;

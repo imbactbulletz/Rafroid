@@ -10,6 +10,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.binarylab.rafroid.R;
 import java.util.Objects;
 
@@ -64,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
             //TODO: Add default fragment
+        }
+
+        if(getIntent().getExtras() != null && getIntent().getExtras().getBoolean("showConnectionError")){
+            Toast.makeText(getApplicationContext(), R.string.error_connecting_to_server, Toast.LENGTH_SHORT).show();
         }
     }
 

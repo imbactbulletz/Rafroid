@@ -62,5 +62,21 @@ public class DateUtil {
         return calendar.getTime();
     }
 
+    public static Date parseTimeHrs(String time, boolean isStart){
+        int hours;
+        int minutes = 0;
+
+        if(isStart)
+            hours = Integer.valueOf(time.split("-")[0]);
+        else
+            hours = Integer.valueOf(time.split("-")[1]);
+
+        Calendar calendar =  Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        calendar.set(Calendar.MINUTE, minutes);
+
+        return calendar.getTime();
+    }
+
 
 }

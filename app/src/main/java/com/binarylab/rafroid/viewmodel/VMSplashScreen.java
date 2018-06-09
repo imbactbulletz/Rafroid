@@ -38,11 +38,11 @@ public class VMSplashScreen extends BaseObservable implements DatabaseUpdateServ
 
     @Override
     public void notifyError() {
-        Toast.makeText(mContext, R.string.error_connecting_to_server, Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new LoadingFinishedEvent(true));
     }
 
     @Override
     public void onPostUpdate() {
-        EventBus.getDefault().post(new LoadingFinishedEvent());
+        EventBus.getDefault().post(new LoadingFinishedEvent(false));
     }
 }

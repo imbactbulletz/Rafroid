@@ -3,7 +3,9 @@ package com.binarylab.rafroid.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
+import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.events.LoadingFinishedEvent;
 import com.binarylab.rafroid.fragments.SplashScreenFragment;
 
@@ -38,8 +40,10 @@ public class SplashScreenActivity extends SingleFragmentActivity {
 
     @Subscribe
     void onEvent(LoadingFinishedEvent event){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            if(event.isFailed())
+                intent.putExtra("showConnectionError",true);
+            startActivity(intent);
+            finish();
     }
 }

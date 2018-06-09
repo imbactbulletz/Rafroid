@@ -6,4 +6,5 @@ public class SharedPreferencesKeyStore {
     public static final String CLASSES_VERSION = "classes-version";
     public static final String CALENDAR_VERSION = "calendar-version";
     public static final String CONSULTATIONS_VERSION = "consultations-version";
+    public static final String NEWS_VERSION = "news-version";
 }

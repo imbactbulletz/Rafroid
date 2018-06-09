@@ -2,6 +2,7 @@ package com.binarylab.rafroid.api;
 
 import com.binarylab.rafroid.dto.CalendarsDTO;
 import com.binarylab.rafroid.dto.ClassesDTO;
+import com.binarylab.rafroid.dto.CompleteNewsDTO;
 import com.binarylab.rafroid.dto.ConsultationsDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
 import com.binarylab.rafroid.dto.VersionDTO;
@@ -50,6 +51,10 @@ public interface Api {
     @Headers("apikey: "+ServicesGenerator.apikey)
     @GET("consultations")
     Call<ConsultationsDTO> getConsultations();
+
+    @Headers("apikey: "+ServicesGenerator.apikey)
+    @GET("news")
+    Call<CompleteNewsDTO> getNews();
 
 
 }

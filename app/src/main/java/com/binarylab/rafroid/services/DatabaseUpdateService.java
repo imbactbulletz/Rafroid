@@ -10,8 +10,10 @@ import com.binarylab.rafroid.dao.CalendarDAO;
 import com.binarylab.rafroid.dao.ClassScheduleDAO;
 import com.binarylab.rafroid.dao.ConsultationDAO;
 import com.binarylab.rafroid.dao.ExamDAO;
+import com.binarylab.rafroid.dao.NewsDAO;
 import com.binarylab.rafroid.dto.CalendarsDTO;
 import com.binarylab.rafroid.dto.ClassesDTO;
+import com.binarylab.rafroid.dto.CompleteNewsDTO;
 import com.binarylab.rafroid.dto.ConsultationDTO;
 import com.binarylab.rafroid.dto.ConsultationsDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
@@ -135,7 +137,17 @@ public class DatabaseUpdateService extends AsyncTask {
 
     private void checkNewsVersion() throws IOException {
         messageService.setMessage(mContext.getString(R.string.update_news));
-        VersionDTO dto = api.newsVersion();
-        //TODO: Update database
+        VersionDTO vdto = api.newsVersion();
+
+        if (vdto.getVersion() > mSharedPreferences.getInt(SharedPreferencesKeyStore.NEWS_VERSION, 0)) {
+
+            CompleteNewsDTO dto = api.getNews();
+            NewsDAO dao = NewsDAO.getInstance();
+            dao.clear();
+            dao.saveNewsFromDTO(dto);
+            ed.putInt(SharedPreferencesKeyStore.NEWS_VERSION, vdto.getVersion());
+            ed.apply();
+
+        }
     }
 }

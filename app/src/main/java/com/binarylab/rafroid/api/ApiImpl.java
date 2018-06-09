@@ -2,6 +2,7 @@ package com.binarylab.rafroid.api;
 
 import com.binarylab.rafroid.dto.CalendarsDTO;
 import com.binarylab.rafroid.dto.ClassesDTO;
+import com.binarylab.rafroid.dto.CompleteNewsDTO;
 import com.binarylab.rafroid.dto.ConsultationsDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
 import com.binarylab.rafroid.dto.VersionDTO;
@@ -70,6 +71,11 @@ public class ApiImpl {
 
     public ConsultationsDTO getConsultations() throws IOException{
         Call<ConsultationsDTO> call = api.getConsultations();
+        return call.execute().body();
+    }
+
+    public CompleteNewsDTO getNews() throws IOException{
+        Call<CompleteNewsDTO> call = api.getNews();
         return call.execute().body();
     }
 }

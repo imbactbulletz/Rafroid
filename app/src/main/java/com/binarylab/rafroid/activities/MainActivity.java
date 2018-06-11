@@ -3,6 +3,7 @@ package com.binarylab.rafroid.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+    private Fragment mFragmentToSet = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,33 @@ public class MainActivity extends AppCompatActivity {
         //Setting toolbar menu button
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        //Setting up drawer layout
         drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.fragment_animation_in, R.anim.fragment_animation_out);
+                fragmentTransaction.replace(R.id.fragment_container, mFragmentToSet);
+                fragmentTransaction.commit();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
 
         //NavigationView that shows from the left
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -47,34 +76,31 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // set item as selected to persist highlight
                 item.setChecked(true);
-                // close drawer when item is tapped
-                drawerLayout.closeDrawers();
 
                 // Add code here to update the UI based on the item selected
                 // For example, swap UI fragments here
                 //TODO: Swap fragments
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
                 switch (item.getItemId()){
 
                     case R.id.nav_classes_schedule:
-                        ClassScheduleFragment classScheduleFragment = ClassScheduleFragment.newInstance(getApplicationContext());
-                        ClassScheduleSearchFragment classScheduleSearchFragment = ClassScheduleSearchFragment.newInstance(getApplicationContext());
-                        TabsFragment fragment = TabsFragment.newInstance(classScheduleFragment,classScheduleSearchFragment);
-                        fragmentTransaction.replace(R.id.fragment_container,fragment);
-                        fragmentTransaction.commit();
+                        ClassScheduleFragment classScheduleFragment = ClassScheduleFragment.newInstance();
+                        classScheduleFragment.setTitle(getString(R.string.schedule));
+                        ClassScheduleSearchFragment classScheduleSearchFragment = ClassScheduleSearchFragment.newInstance();
+                        classScheduleSearchFragment.setTitle(getString(R.string.search));
+                        mFragmentToSet = TabsFragment.newInstance(classScheduleFragment,classScheduleSearchFragment);
                         break;
 
 
                     case R.id.nav_news:
-                        fragmentTransaction.replace(R.id.fragment_container, NewsFragment.newInstance());
-                        fragmentTransaction.commit();
+                        mFragmentToSet = NewsFragment.newInstance();
                         break;
 
                     default: break;
                 }
 
+                // close drawer when item is tapped
+                drawerLayout.closeDrawers();
 
                 return true;
             }

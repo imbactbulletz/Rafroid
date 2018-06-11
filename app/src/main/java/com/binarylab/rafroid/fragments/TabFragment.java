@@ -9,17 +9,19 @@ public abstract class TabFragment extends Fragment {
     private String mTitle;
     private Drawable mIcon;
 
-    public TabFragment(String title, Drawable icon){
-        this.mIcon = icon;
-        this.mTitle = title;
-    }
-
-
     public Drawable getIcon() {
         return mIcon;
     }
 
     public String getTitle() {
         return mTitle;
+    }
+
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
+    public void setIcon(Drawable icon) {
+        mIcon = icon;
     }
 }

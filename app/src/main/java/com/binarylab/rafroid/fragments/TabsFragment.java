@@ -1,6 +1,7 @@
 package com.binarylab.rafroid.fragments;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.binarylab.rafroid.R;
 
@@ -22,11 +25,11 @@ public class TabsFragment extends Fragment {
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private List<TabFragment> mFragments;
+    private static List<TabFragment> mFragments;
 
     public static TabsFragment newInstance(TabFragment... fragments) {
         TabsFragment instance = new TabsFragment();
-        instance.mFragments = new ArrayList<>(Arrays.asList(fragments));
+        mFragments = new ArrayList<>(Arrays.asList(fragments));
         return instance;
     }
 

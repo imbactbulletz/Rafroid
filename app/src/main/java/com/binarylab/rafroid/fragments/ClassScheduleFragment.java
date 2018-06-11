@@ -16,19 +16,15 @@ import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.databinding.FragmentClassScheduleBinding;
 import com.binarylab.rafroid.viewmodel.VMClassSchedule;
 
-@SuppressLint("ValidFragment")
+import java.util.Objects;
+
 public class ClassScheduleFragment extends TabFragment{
-
-
-    private ClassScheduleFragment(String title, Drawable icon) {
-        super(title, icon);
-    }
 
     FragmentClassScheduleBinding mBinding;
     VMClassSchedule mVMClassSchedule;
 
-    public static ClassScheduleFragment newInstance(Context context) {
-        return new ClassScheduleFragment(context.getString(R.string.schedule),null);
+    public static ClassScheduleFragment newInstance() {
+        return new ClassScheduleFragment();
     }
 
     @Override
@@ -38,12 +34,11 @@ public class ClassScheduleFragment extends TabFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_schedule, container, true);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_schedule, container, false);
         mVMClassSchedule = new VMClassSchedule(getContext());
         mBinding.setVm(mVMClassSchedule);
         RecyclerView recyclerView = mBinding.getRoot().findViewById(R.id.class_schedule);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return mBinding.getRoot();
     }
-
 }

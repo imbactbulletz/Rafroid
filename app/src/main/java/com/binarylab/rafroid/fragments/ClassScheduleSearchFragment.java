@@ -18,15 +18,11 @@ import com.binarylab.rafroid.viewmodel.VMClassScheduleSearch;
 public class ClassScheduleSearchFragment extends TabFragment{
 
 
-    private ClassScheduleSearchFragment(String title, Drawable icon) {
-        super(title, icon);
-    }
-
     FragmentClassScheduleSearchBinding mBinding;
     VMClassScheduleSearch mVMClassSchedule;
 
-    public static ClassScheduleSearchFragment newInstance(Context context) {
-        return new ClassScheduleSearchFragment(context.getString(R.string.search),null);
+    public static ClassScheduleSearchFragment newInstance() {
+        return new ClassScheduleSearchFragment();
     }
 
     @Override
@@ -36,7 +32,7 @@ public class ClassScheduleSearchFragment extends TabFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_schedule_search, container, true);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_schedule_search, container, false);
         mVMClassSchedule = new VMClassScheduleSearch(getContext());
         mBinding.setVm(mVMClassSchedule);
 //        RecyclerView recyclerView = mBinding.getRoot().findViewById(R.id.news_feed);

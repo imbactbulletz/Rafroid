@@ -6,6 +6,8 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +41,8 @@ public class ClassScheduleFragment extends TabFragment{
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_schedule, container, true);
         mVMClassSchedule = new VMClassSchedule(getContext());
         mBinding.setVm(mVMClassSchedule);
-//        RecyclerView recyclerView = mBinding.getRoot().findViewById(R.id.news_feed);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView recyclerView = mBinding.getRoot().findViewById(R.id.class_schedule);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return mBinding.getRoot();
     }
 

@@ -13,7 +13,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
+import com.binarylab.rafroid.fragments.ClassScheduleFragment;
+import com.binarylab.rafroid.fragments.ClassScheduleSearchFragment;
 import com.binarylab.rafroid.fragments.NewsFragment;
+import com.binarylab.rafroid.fragments.TabsFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Objects;
@@ -50,6 +53,27 @@ public class MainActivity extends AppCompatActivity {
                 // Add code here to update the UI based on the item selected
                 // For example, swap UI fragments here
                 //TODO: Swap fragments
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                switch (item.getItemId()){
+
+                    case R.id.nav_classes_schedule:
+                        ClassScheduleFragment classScheduleFragment = ClassScheduleFragment.newInstance(getApplicationContext());
+                        ClassScheduleSearchFragment classScheduleSearchFragment = ClassScheduleSearchFragment.newInstance(getApplicationContext());
+                        TabsFragment fragment = TabsFragment.newInstance(classScheduleFragment,classScheduleSearchFragment);
+                        fragmentTransaction.replace(R.id.fragment_container,fragment);
+                        fragmentTransaction.commit();
+                        break;
+
+
+                    case R.id.nav_news:
+                        fragmentTransaction.replace(R.id.fragment_container, NewsFragment.newInstance());
+                        fragmentTransaction.commit();
+                        break;
+
+                    default: break;
+                }
 
 
                 return true;
@@ -71,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
             fragmentTransaction.add(R.id.fragment_container, NewsFragment.newInstance());
             fragmentTransaction.commit();
+
+            //Set selection of the news inside the menu
+            navigationView.getMenu().getItem(5).setChecked(true);
         }
 
         if(getIntent().getExtras() != null && getIntent().getExtras().getBoolean("showConnectionError")){

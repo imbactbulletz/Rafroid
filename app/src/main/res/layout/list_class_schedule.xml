@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -33,6 +34,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constriainter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/class_name">
             <TextView
                 android:id="@+id/class_type"
                 android:layout_width="0dp"
@@ -40,18 +48,18 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                app:layout_constraintEnd_toStartOf="@id/class_lecturer"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/class_name" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/class_lecturer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                app:layout_constraintEnd_toStartOf="@id/class_group"
-                app:layout_constraintStart_toEndOf="@id/class_type"
-                app:layout_constraintTop_toBottomOf="@id/class_name" />
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/class_group"
@@ -60,39 +68,75 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="15dp"
+                android:gravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/class_lecturer"
-                app:layout_constraintTop_toBottomOf="@id/class_name" />
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".35" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".75" />
+
+            </android.support.constraint.ConstraintLayout>
+
 
             <TextView
                 android:id="@+id/class_dayofweek"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="15dp"
                 app:layout_constraintBaseline_toBaselineOf="@id/class_classroom"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/class_type"
-                app:layout_constraintEnd_toEndOf="@id/class_type" />
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/constriainter"
+                app:layout_constraintTop_toBottomOf="@id/constriainter" />
 
             <TextView
                 android:id="@+id/class_time"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBaseline_toBaselineOf="@id/class_classroom"
-                app:layout_constraintStart_toStartOf="@id/class_lecturer"
-                app:layout_constraintTop_toBottomOf="@id/class_lecturer"
-                app:layout_constraintEnd_toEndOf="@id/class_lecturer"/>
+                app:layout_constraintEnd_toEndOf="@id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@id/constriainter" />
 
 
             <TextView
                 android:id="@+id/class_classroom"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
+                android:gravity="end"
+                android:layout_marginStart="9dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/class_group"
-                app:layout_constraintTop_toBottomOf="@id/class_group"
+                app:layout_constraintStart_toStartOf="@id/guideline5"
+                app:layout_constraintTop_toBottomOf="@id/constriainter"
                 android:paddingBottom="20dp"/>
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".35" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".75" />
 
         </android.support.constraint.ConstraintLayout>
 

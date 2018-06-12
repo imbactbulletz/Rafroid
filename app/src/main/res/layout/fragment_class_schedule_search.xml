@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -8,24 +10,126 @@
             type="com.binarylab.rafroid.viewmodel.VMClassScheduleSearch"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Zdravo Svete Milan Skaric"
+        <android.support.v7.widget.CardView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_marginBottom="@dimen/standard_layout_margin"
+            android:layout_marginEnd="@dimen/standard_layout_margin"
+            android:layout_marginStart="@dimen/standard_layout_margin"
+            android:layout_marginTop="@dimen/standard_layout_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <AutoCompleteTextView
+                    android:id="@+id/spSubject"
+                    android:layout_width="0dp"
+                    android:hint="@string/subject"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/standard_layout_margin"
+                    android:layout_marginStart="@dimen/standard_layout_margin"
+                    android:layout_marginTop="@dimen/standard_layout_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_element_margin"
+                    android:layout_marginStart="@dimen/standard_layout_margin"
+                    android:layout_marginEnd="@dimen/standard_layout_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spSubject" />
+
+                <Spinner
+                    android:id="@+id/spLecturer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_element_margin"
+                    android:layout_marginStart="@dimen/standard_layout_margin"
+                    android:layout_marginEnd="@dimen/standard_layout_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spType" />
+
+                <EditText
+                    android:id="@+id/spGroups"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/groups"
+                    android:layout_marginTop="@dimen/standard_element_margin"
+                    android:layout_marginStart="@dimen/standard_layout_margin"
+                    android:layout_marginEnd="@dimen/standard_layout_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spLecturer" />
+
+                <Spinner
+                    android:id="@+id/spDayOfWeek"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    hint
+                    android:layout_marginTop="@dimen/standard_element_margin"
+                    android:layout_marginStart="@dimen/standard_layout_margin"
+                    android:layout_marginEnd="@dimen/standard_layout_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spGroups" />
+
+                <TimePicker
+                    android:id="@+id/spTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:timePickerMode="spinner"
+                    android:layout_marginTop="@dimen/standard_element_margin"
+                    android:layout_marginStart="@dimen/standard_layout_margin"
+                    android:layout_marginEnd="@dimen/standard_layout_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spDayOfWeek" />
+
+                <Spinner
+                    android:id="@+id/spClassroom"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_element_margin"
+                    android:layout_marginStart="@dimen/standard_layout_margin"
+                    android:layout_marginEnd="@dimen/standard_layout_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spTime" />
+
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:text="@string/search_it"
+                    android:layout_marginTop="@dimen/standard_element_margin"
+                    android:layout_marginEnd="@dimen/standard_layout_margin"
+                    android:layout_marginStart="@dimen/standard_layout_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spClassroom" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -18,4 +18,7 @@
     <string name="exit">Izlaz</string>
     <string name="schedule">Raspored</string>
     <string name="search">Pretraga</string>
+    <string name="search_it">Pretrazi</string>
+    <string name="subject">Predmet</string>
+    <string name="groups">Grupe</string>
 </resources>

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.fragments.ClassScheduleFragment;
+import com.binarylab.rafroid.fragments.ExamFragment;
 import com.binarylab.rafroid.fragments.NewsFragment;
 
 import java.util.Objects;
@@ -53,11 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerClosed(@NonNull View drawerView) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.fragment_animation_in, R.anim.fragment_animation_out);
-                fragmentTransaction.replace(R.id.fragment_container, mFragmentToSet);
-                fragmentTransaction.commit();
+                if (mFragmentToSet != null) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.fragment_animation_in, R.anim.fragment_animation_out);
+                    fragmentTransaction.replace(R.id.fragment_container, mFragmentToSet);
+                    fragmentTransaction.commit();
+                }
             }
 
             @Override
@@ -68,35 +71,36 @@ public class MainActivity extends AppCompatActivity {
 
         //NavigationView that shows from the left
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // set item as selected to persist highlight
-                item.setChecked(true);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            // set item as selected to persist highlight
+            item.setChecked(true);
 
-                // Add code here to update the UI based on the item selected
-                // For example, swap UI fragments here
-                //TODO: Swap fragments
+            // Add code here to update the UI based on the item selected
+            // For example, swap UI fragments here
+            //TODO: Swap fragments
 
-                switch (item.getItemId()){
+            switch (item.getItemId()) {
 
-                    case R.id.nav_classes_schedule:
-                        mFragmentToSet = ClassScheduleFragment.newInstance();
-                        break;
+                case R.id.nav_classes_schedule:
+                    mFragmentToSet = ClassScheduleFragment.newInstance();
+                    break;
 
+                case R.id.nav_exam_schedule:
+                    mFragmentToSet = ExamFragment.newInstance();
+                    break;
 
-                    case R.id.nav_news:
-                        mFragmentToSet = NewsFragment.newInstance();
-                        break;
+                case R.id.nav_news:
+                    mFragmentToSet = NewsFragment.newInstance();
+                    break;
 
-                    default: break;
-                }
-
-                // close drawer when item is tapped
-                drawerLayout.closeDrawers();
-
-                return true;
+                default:
+                    break;
             }
+
+            // close drawer when item is tapped
+            drawerLayout.closeDrawers();
+
+            return true;
         });
 
         if (findViewById(R.id.fragment_container) != null) {

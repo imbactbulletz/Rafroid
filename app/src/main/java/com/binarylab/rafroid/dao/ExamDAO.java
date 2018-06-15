@@ -2,9 +2,13 @@ package com.binarylab.rafroid.dao;
 
 import com.binarylab.rafroid.dto.ExamDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
+import com.binarylab.rafroid.model.DayOfWeek;
 import com.binarylab.rafroid.model.Exam;
 import com.binarylab.rafroid.model.ExamType;
 import com.binarylab.rafroid.util.DateUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.Realm;
 
@@ -45,5 +49,40 @@ public class ExamDAO {
 
         realm.commitTransaction();
 
+    }
+
+    public List<String> getAllDays() {
+        List<String> set = new ArrayList<>();
+        for (DayOfWeek dayofWeek : DayOfWeek.values())
+            set.add(dayofWeek.toString());
+
+        return set;
+    }
+
+    public List<String> getAllClassrooms() {
+        Realm realm = Realm.getDefaultInstance();
+        List<String> set = new ArrayList<>();
+        for (Exam exam : realm.where(Exam.class).distinct("classroom").findAll())
+            set.add(exam.getClassroom());
+
+        return set;
+    }
+
+    public List<String> getAllLecturers() {
+        Realm realm = Realm.getDefaultInstance();
+        List<String> set = new ArrayList<>();
+        for (Exam exam : realm.where(Exam.class).distinct("professor").findAll())
+            set.add(exam.getProfessor());
+
+        return set;
+    }
+
+    public List<String> getAllSubjects() {
+        Realm realm = Realm.getDefaultInstance();
+        List<String> set = new ArrayList<>();
+        for (Exam exam : realm.where(Exam.class).distinct("testName").findAll())
+            set.add(exam.getTestName());
+
+        return set;
     }
 }

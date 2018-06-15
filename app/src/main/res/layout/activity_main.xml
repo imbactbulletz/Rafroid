@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:titleTextColor="@color/colorWhite" />
 
@@ -38,7 +38,6 @@
         android:backgroundTint="@color/colorWhite"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
-        app:itemIconTint="@color/colorGrayDark"
         app:menu="@menu/menu_drawer" />
 
 

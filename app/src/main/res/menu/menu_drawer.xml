@@ -7,17 +7,17 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_classes_schedule"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_predavanja"
             android:title="@string/classes_schedule" />
 
         <item
             android:id="@+id/nav_curriculum_schedule"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_kolokvijumi"
             android:title="@string/curriculum_schedule" />
 
         <item
             android:id="@+id/nav_exam_schedule"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_ispiti"
             android:title="@string/exam_schedule" />
     </group>
 
@@ -26,17 +26,17 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_teaching_schedule"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_calendar_nastave"
             android:title="@string/teaching_schedule" />
 
         <item
             android:id="@+id/nav_consultation_schedule"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_kolokvijumi"
             android:title="@string/consultation_schedule" />
 
         <item
             android:id="@+id/nav_news"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_vesti"
             android:title="@string/news" />
     </group>
 

@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
-        app:cardCornerRadius="16dp"
-        android:layout_marginTop="@dimen/standard_layout_margin"
+        android:layout_marginTop="@dimen/standard_element_margin"
+        app:cardCornerRadius="12dp"
         android:layout_marginLeft="@dimen/standard_layout_margin"
         android:layout_marginRight="@dimen/standard_layout_margin">
 

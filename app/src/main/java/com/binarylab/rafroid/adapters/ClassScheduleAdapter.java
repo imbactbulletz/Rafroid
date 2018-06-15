@@ -44,7 +44,17 @@ public class ClassScheduleAdapter extends RecyclerView.Adapter<ClassScheduleAdap
     public void onBindViewHolder(final NewsViewHolder holder, final int position) {
         ClassSchedule classSchedule = mClassScheduleList.get(position);
         holder.tvClassName.setText(classSchedule.getClassName());
-        holder.tvClassType.setText(classSchedule.getType());
+        //holder.tvClassType.setText(classSchedule.getType());
+        if(classSchedule.getType().equals("Vezbe") || classSchedule.getType().equals("Laboratorijske vezbe")){
+            holder.tvClassType.setText("V");
+            holder.tvClassType.setBackgroundResource(R.color.colorPink);
+            Log.d("BOBAN_RAJOVIC","EJ_KOSACIII");
+        }
+        else{
+            holder.tvClassType.setText("P");
+            holder.tvClassType.setBackgroundResource(R.color.colorPrimary);
+        }
+
         holder.tvClassLecturer.setText(classSchedule.getLecturer());
         holder.tvClassGroup.setText(classSchedule.getStudentGroups());
         holder.tvclassDayofweek.setText(classSchedule.getDayOfWeek().toString());

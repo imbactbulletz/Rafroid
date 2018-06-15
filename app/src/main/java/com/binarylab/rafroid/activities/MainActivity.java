@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -83,14 +84,51 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.nav_classes_schedule:
                     mFragmentToSet = ClassScheduleFragment.newInstance();
+                    getSupportActionBar().setTitle(R.string.classes_schedule);
+                    break;
+
+                case R.id.nav_curriculum_schedule:
+                    getSupportActionBar().setTitle(R.string.curriculum_schedule);
                     break;
 
                 case R.id.nav_exam_schedule:
+                    getSupportActionBar().setTitle(R.string.exam_schedule);
                     mFragmentToSet = ExamFragment.newInstance();
+                    break;
+
+                case R.id.nav_teaching_schedule:
+                    getSupportActionBar().setTitle(R.string.teaching_schedule);
+                    break;
+
+                case R.id.nav_consultation_schedule:
+                    getSupportActionBar().setTitle(R.string.consultation_schedule);
                     break;
 
                 case R.id.nav_news:
                     mFragmentToSet = NewsFragment.newInstance();
+                    getSupportActionBar().setTitle(R.string.news);
+                    break;
+
+                case R.id.nav_settings:
+                    getSupportActionBar().setTitle(R.string.settings);
+                    break;
+
+                case R.id.nav_about:
+                    getSupportActionBar().setTitle(R.string.about);
+                    break;
+
+                case R.id.nav_exit:
+                    new AlertDialog.Builder(this)
+                            .setMessage(getString(R.string.exit_dialog_message))
+                            .setCancelable(false)
+                            .setPositiveButton(getString(R.string.yes), (dialog, id) -> {
+                                //Kill application with fire
+                                moveTaskToBack(true);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(1);
+                            })
+                            .setNegativeButton(getString(R.string.no), null)
+                            .show();
                     break;
 
                 default:
@@ -118,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
 
             fragmentTransaction.add(R.id.fragment_container, NewsFragment.newInstance());
             fragmentTransaction.commit();
+
+            //Set title
+            getSupportActionBar().setTitle(R.string.news);
 
             //Set selection of the news inside the menu
             navigationView.getMenu().getItem(5).setChecked(true);

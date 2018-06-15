@@ -8,8 +8,8 @@ public class ClassSchedule extends RealmObject {
 
     private String className;
     private String dayOfWeek;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     private String classroom;
     private String lecturer;
     private String studentGroups;
@@ -34,11 +34,11 @@ public class ClassSchedule extends RealmObject {
         this.dayOfWeek = dayOfWeek.toString();
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
@@ -78,11 +78,11 @@ public class ClassSchedule extends RealmObject {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 }

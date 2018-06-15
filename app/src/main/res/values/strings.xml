@@ -22,4 +22,9 @@
     <string name="subject">Predmet</string>
     <string name="groups">Grupe</string>
     <string name="time">Termin</string>
+    <string name="type">Tip</string>
+    <string name="lecturer">Nastavnik</string>
+    <string name="day">Dan</string>
+    <string name="classroom">Ucionica</string>
+    <string name="select_time">Izaberite Termin</string>
 </resources>

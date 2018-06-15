@@ -30,12 +30,12 @@ public class ClassScheduleFragment extends TabFragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mVMClassSchedule = new VMClassSchedule(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_schedule, container, false);
-        mVMClassSchedule = new VMClassSchedule(getContext());
         mBinding.setVm(mVMClassSchedule);
         RecyclerView recyclerView = mBinding.getRoot().findViewById(R.id.class_schedule);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

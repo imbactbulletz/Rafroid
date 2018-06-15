@@ -28,7 +28,6 @@ public class ClassScheduleAdapter extends RecyclerView.Adapter<ClassScheduleAdap
 
     private static int currentPosition = -1;
     private static int lastPosition = -1;
-    private SimpleDateFormat mFormat = new SimpleDateFormat("HH:mm");
 
     public ClassScheduleAdapter(List<ClassSchedule> newsList, Context context) {
         this.mClassScheduleList = newsList;
@@ -50,8 +49,7 @@ public class ClassScheduleAdapter extends RecyclerView.Adapter<ClassScheduleAdap
         holder.tvClassGroup.setText(classSchedule.getStudentGroups());
         holder.tvclassDayofweek.setText(classSchedule.getDayOfWeek().toString());
 
-        String time = mFormat.format(classSchedule.getStartTime()) + "-" + mFormat.format(classSchedule.getEndTime());
-        holder.tvClassTime.setText(time);
+        holder.tvClassTime.setText(classSchedule.getStartTime()+"-"+classSchedule.getEndTime());
         holder.tvClassClassroom.setText(classSchedule.getClassroom());
     }
 

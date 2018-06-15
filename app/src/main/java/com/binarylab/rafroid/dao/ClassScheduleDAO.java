@@ -8,9 +8,11 @@ import com.binarylab.rafroid.model.ClassSchedule;
 import com.binarylab.rafroid.model.DayOfWeek;
 import com.binarylab.rafroid.util.DateUtil;
 
+import java.util.HashSet;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 
 public class ClassScheduleDAO {
 
@@ -56,5 +58,59 @@ public class ClassScheduleDAO {
     public List<ClassSchedule> getAll(){
         Realm realm = Realm.getDefaultInstance();
         return realm.where(ClassSchedule.class).findAll();
+    }
+
+    public HashSet<String> getAllTypes(){
+        HashSet<String> set = new HashSet<>();
+        Realm realm = Realm.getDefaultInstance();
+        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("type").findAll()){
+            set.add(sch.getType());
+        }
+
+        return set;
+    }
+
+    public HashSet<String> getAllLecturers(){
+        HashSet<String> set = new HashSet<>();
+        Realm realm = Realm.getDefaultInstance();
+        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("lecturer").findAll()){
+            set.add(sch.getLecturer());
+        }
+
+        return set;
+    }
+
+    public HashSet<String> getAllDayOfWeeks(){
+        HashSet<String> set = new HashSet<>();
+        Realm realm = Realm.getDefaultInstance();
+        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("dayOfWeek").findAll()){
+            set.add(sch.getDayOfWeek().toString());
+        }
+
+        return set;
+    }
+
+    public HashSet<String> getAllClassrooms(){
+        HashSet<String> set = new HashSet<>();
+        Realm realm = Realm.getDefaultInstance();
+        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("classroom").findAll()){
+            set.add(sch.getClassroom());
+        }
+
+        return set;
+    }
+
+    public HashSet<String> getAllSubjects(){
+        HashSet<String> set = new HashSet<>();
+        Realm realm = Realm.getDefaultInstance();
+        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("className").findAll()){
+            set.add(sch.getClassName());
+        }
+
+        return set;
+    }
+
+    public RealmQuery<ClassSchedule> getQueryBuilder(){
+        return Realm.getDefaultInstance().where(ClassSchedule.class);
     }
 }

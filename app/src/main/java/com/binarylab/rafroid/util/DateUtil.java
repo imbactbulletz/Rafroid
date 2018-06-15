@@ -27,7 +27,7 @@ public class DateUtil {
         return calendar.getTime();
     }
 
-    public static Date parseTime(String date_time, boolean isStart){
+    public static String parseTime(String date_time, boolean isStart){
 
         int hours;
         int minutes;
@@ -41,11 +41,7 @@ public class DateUtil {
             minutes = 0;
         }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hours);
-        calendar.set(Calendar.MINUTE, minutes);
-
-        return calendar.getTime();
+        return hours + ":" + minutes;
     }
 
     public static Date parseDate(String date){

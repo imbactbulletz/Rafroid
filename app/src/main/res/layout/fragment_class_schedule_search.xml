@@ -10,7 +10,7 @@
 
         <variable
             name="vm"
-            type="com.binarylab.rafroid.viewmodel.VMClassScheduleSearch" />
+            type="com.binarylab.rafroid.viewmodel.VMClassSchedule" />
     </data>
 
     <FrameLayout
@@ -47,6 +47,7 @@
                             android:id="@+id/spSubject"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:inputType="text"
                             android:layout_marginEnd="@dimen/standard_layout_margin"
                             android:layout_marginStart="@dimen/standard_layout_margin"
                             android:layout_marginTop="@dimen/standard_layout_margin"
@@ -73,6 +74,7 @@
                             android:id="@+id/spLecturer"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:inputType="text"
                             android:layout_marginEnd="@dimen/standard_layout_margin"
                             android:layout_marginStart="@dimen/standard_layout_margin"
                             android:layout_marginTop="@dimen/standard_element_margin"
@@ -86,6 +88,7 @@
                             android:id="@+id/spGroups"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:inputType="text"
                             android:layout_marginEnd="@dimen/standard_layout_margin"
                             android:layout_marginStart="@dimen/standard_layout_margin"
                             android:layout_marginTop="@dimen/standard_element_margin"

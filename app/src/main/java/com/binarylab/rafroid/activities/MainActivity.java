@@ -16,11 +16,8 @@ import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.fragments.ClassScheduleFragment;
-import com.binarylab.rafroid.fragments.ClassScheduleSearchFragment;
 import com.binarylab.rafroid.fragments.NewsFragment;
-import com.binarylab.rafroid.fragments.TabsFragment;
 
-import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -84,11 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
 
                     case R.id.nav_classes_schedule:
-                        ClassScheduleFragment classScheduleFragment = ClassScheduleFragment.newInstance();
-                        classScheduleFragment.setTitle(getString(R.string.schedule));
-                        ClassScheduleSearchFragment classScheduleSearchFragment = ClassScheduleSearchFragment.newInstance();
-                        classScheduleSearchFragment.setTitle(getString(R.string.search));
-                        mFragmentToSet = TabsFragment.newInstance(classScheduleFragment,classScheduleSearchFragment);
+                        mFragmentToSet = ClassScheduleFragment.newInstance();
                         break;
 
 

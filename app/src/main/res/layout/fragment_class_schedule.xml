@@ -194,6 +194,7 @@
                 android:layout_marginEnd="@dimen/standard_large_margin"
                 android:onClick="@{vm.onFilterClicked}"
                 android:src="@drawable/ic_filter_white"
+                app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

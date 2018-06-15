@@ -35,4 +35,5 @@
     <string name="exit_dialog_message">Da li ste sigurni da zelite da izadjete?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="no_data_for_showing">Nema podataka za prikazivnaje</string>
 </resources>

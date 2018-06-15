@@ -198,6 +198,18 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/standard_layout_margin"
+                android:layout_marginStart="@dimen/standard_layout_margin"
+                android:layout_marginTop="@dimen/standard_layout_margin"
+                android:text="@string/no_data_for_showing"
+                android:visibility="@{vm.noDataVisible? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>

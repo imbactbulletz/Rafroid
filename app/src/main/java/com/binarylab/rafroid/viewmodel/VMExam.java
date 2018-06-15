@@ -8,11 +8,13 @@ import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.binarylab.rafroid.BR;
 import com.binarylab.rafroid.R;
+import com.binarylab.rafroid.adapters.ExamAdapter;
 import com.binarylab.rafroid.dao.ExamDAO;
 
 import java.util.Calendar;
@@ -24,6 +26,7 @@ public class VMExam extends BaseObservable {
 
     private Context mContext;
 
+    private ExamAdapter mAdapter;
     private boolean isInputVisible;
 
     private ObservableList<String> mDay, mClassroomsList, mLecturerList,
@@ -36,6 +39,8 @@ public class VMExam extends BaseObservable {
         isInputVisible = false;
 
         ExamDAO dao = ExamDAO.getInstance();
+
+        mAdapter = new ExamAdapter(dao.getAllExams(), context);
 
         //Filling the Day spinner
         //TODO: Implement this 1 day
@@ -152,6 +157,16 @@ public class VMExam extends BaseObservable {
     public void setTime(String time) {
         this.time = time;
         notifyPropertyChanged(BR.time);
+    }
+
+    @Bindable
+    public RecyclerView.Adapter getExamAdapter() {
+        return mAdapter;
+    }
+
+    @Bindable
+    public boolean getNoDataVisible() {
+        return mAdapter.getItemCount() <= 0;
     }
 
     //Action Commands//

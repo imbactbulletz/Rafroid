@@ -16,39 +16,45 @@ public class ExamDAO {
 
     private static ExamDAO instance;
 
-    private ExamDAO(){}
+    private ExamDAO() {
+    }
 
     public static ExamDAO getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new ExamDAO();
         return instance;
     }
 
-    public void clear(){
+    public void clear() {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.delete(Exam.class);
         realm.commitTransaction();
     }
 
-    public void saveExamsFromDTO(ExamsDTO dtos){
+    public void saveExamsFromDTO(ExamsDTO dtos) {
 
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
-            for(ExamDTO dto:dtos.getSchedule()){
-                Exam exam = new Exam();
-                exam.setTestName(dto.getTest_name());
-                exam.setClassroom(dto.getClassroom());
-                exam.setType(ExamType.valueOf(dto.getType()));
-                exam.setProfessor(dto.getProfessor());
-                exam.setStartTime(DateUtil.parseDateAndTime(dto.getDate_and_time(),true));
-                exam.setEndTime(DateUtil.parseDateAndTime(dto.getDate_and_time(), false));
-                realm.copyToRealm(exam);
-            }
+        for (ExamDTO dto : dtos.getSchedule()) {
+            Exam exam = new Exam();
+            exam.setTestName(dto.getTest_name());
+            exam.setClassroom(dto.getClassroom());
+            exam.setType(ExamType.valueOf(dto.getType()));
+            exam.setProfessor(dto.getProfessor());
+            exam.setStartTime(DateUtil.parseDateAndTime(dto.getDate_and_time(), true));
+            exam.setEndTime(DateUtil.parseDateAndTime(dto.getDate_and_time(), false));
+            realm.copyToRealm(exam);
+        }
 
         realm.commitTransaction();
 
+    }
+
+    public List<Exam> getAllExams() {
+        Realm realm = Realm.getDefaultInstance();
+        return realm.where(Exam.class).equalTo("type", ExamType.EXAM.toString()).findAll();
     }
 
     public List<String> getAllDays() {

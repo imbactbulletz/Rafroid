@@ -30,5 +30,9 @@ public class VMNews extends BaseObservable{
         return mNewsAdapter;
     }
 
+    @Bindable
+    public boolean getNoDataVisible() {
+        return mNewsAdapter.getItemCount() <= 0;
+    }
 
 }

@@ -8,11 +8,13 @@ import com.binarylab.rafroid.model.ClassSchedule;
 import com.binarylab.rafroid.model.DayOfWeek;
 import com.binarylab.rafroid.util.DateUtil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import io.realm.Sort;
 
 public class ClassScheduleDAO {
 
@@ -70,10 +72,10 @@ public class ClassScheduleDAO {
         return set;
     }
 
-    public HashSet<String> getAllLecturers(){
-        HashSet<String> set = new HashSet<>();
+    public List<String> getAllLecturers(){
+        List<String> set = new ArrayList<>();
         Realm realm = Realm.getDefaultInstance();
-        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("lecturer").findAll()){
+        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("lecturer").findAll().sort("lecturer")){
             set.add(sch.getLecturer());
         }
 
@@ -90,20 +92,20 @@ public class ClassScheduleDAO {
         return set;
     }
 
-    public HashSet<String> getAllClassrooms(){
-        HashSet<String> set = new HashSet<>();
+    public List<String> getAllClassrooms(){
+        List<String> set = new ArrayList<>();
         Realm realm = Realm.getDefaultInstance();
-        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("classroom").findAll()){
+        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("classroom").findAll().sort("classroom")){
             set.add(sch.getClassroom());
         }
 
         return set;
     }
 
-    public HashSet<String> getAllSubjects(){
-        HashSet<String> set = new HashSet<>();
+    public List<String> getAllSubjects(){
+        List<String> set = new ArrayList<>();
         Realm realm = Realm.getDefaultInstance();
-        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("className").findAll()){
+        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("className").findAll().sort("className")){
             set.add(sch.getClassName());
         }
 

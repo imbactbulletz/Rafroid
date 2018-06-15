@@ -12,14 +12,13 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 
 import com.binarylab.rafroid.R;
-import com.binarylab.rafroid.databinding.FragmentClassScheduleSearchBinding;
+import com.binarylab.rafroid.databinding.FragmentClassScheduleBinding;
 import com.binarylab.rafroid.viewmodel.VMClassSchedule;
 
 @SuppressLint("ValidFragment")
 public class ClassScheduleFragment extends TabFragment{
 
-
-    FragmentClassScheduleSearchBinding mBinding;
+    FragmentClassScheduleBinding mBinding;
     VMClassSchedule mVMClassSchedule;
 
     public static ClassScheduleFragment newInstance() {
@@ -34,7 +33,7 @@ public class ClassScheduleFragment extends TabFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_schedule_search, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_schedule, container, false);
         mBinding.setVm(mVMClassSchedule);
 
         AutoCompleteTextView autoCompleter = mBinding.getRoot().findViewById(R.id.spLecturer);

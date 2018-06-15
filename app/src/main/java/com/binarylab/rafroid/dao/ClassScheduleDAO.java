@@ -1,7 +1,5 @@
 package com.binarylab.rafroid.dao;
 
-import android.util.Log;
-
 import com.binarylab.rafroid.dto.ClassDTO;
 import com.binarylab.rafroid.dto.ClassesDTO;
 import com.binarylab.rafroid.model.ClassSchedule;
@@ -14,7 +12,6 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
-import io.realm.Sort;
 
 public class ClassScheduleDAO {
 
@@ -82,8 +79,8 @@ public class ClassScheduleDAO {
         return set;
     }
 
-    public HashSet<String> getAllDayOfWeeks(){
-        HashSet<String> set = new HashSet<>();
+    public List<String> getAllDayOfWeeks() {
+        List<String> set = new ArrayList<>();
         Realm realm = Realm.getDefaultInstance();
         for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("dayOfWeek").findAll()){
             set.add(sch.getDayOfWeek().toString());

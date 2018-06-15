@@ -10,7 +10,6 @@ import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.TimePicker;
 
 import com.binarylab.rafroid.BR;
 import com.binarylab.rafroid.R;
@@ -189,6 +188,11 @@ public class VMClassSchedule extends BaseObservable {
         return mClassScheduleAdapter;
     }
 
+    @Bindable
+    public boolean getNoDataVisible() {
+        return mClassScheduleAdapter.getItemCount() <= 0;
+    }
+
 
     //Action Commands//
     //--------------------------------------------------------------------------------------------//
@@ -223,6 +227,7 @@ public class VMClassSchedule extends BaseObservable {
 
 
             mClassScheduleAdapter.notifyDataSetChanged();
+            notifyPropertyChanged(BR.noDataVisible);
             setInputVisible(false);
         };
     }

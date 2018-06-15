@@ -14,7 +14,7 @@
     <string name="exam_schedule">Raspored Ispita</string>
     <string name="teaching_schedule">Kalendar Nastave</string>
     <string name="consultation_schedule">Raspored Konsultacija</string>
-    <string name="news">Novosti</string>
+    <string name="news">Vesti</string>
     <string name="exit">Izlaz</string>
     <string name="schedule">Raspored</string>
     <string name="search">Pretraga</string>
@@ -27,4 +27,13 @@
     <string name="day">Dan</string>
     <string name="classroom">Ucionica</string>
     <string name="select_time">Izaberite Termin</string>
+    <string name="time1">Vreme</string>
+    <string name="date">Datum</string>
+    <string name="professor">Profesor</string>
+    <string name="select_time1">Izaberite Vreme</string>
+    <string name="select_date">Izaberite Datum</string>
+    <string name="exit_dialog_message">Da li ste sigurni da zelite da izadjete?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="no_data_for_showing">Nema podataka za prikazivnaje</string>
 </resources>

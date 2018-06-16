@@ -47,19 +47,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.tvNewsTitle.setText(news.getTitle());
         holder.tvDate.setText(mFormat.format(news.getDate()));
         holder.tvNewsText.setText(news.getText());
-        holder.tvNewsText.setVisibility(View.GONE);
+        holder.tvNewsText.setMaxLines(3);
+//        holder.tvNewsText.setVisibility(View.GONE);
         holder.icon_expand.animate().rotation(0).start();
+        holder.tvNewsTitle.setBackgroundResource(R.color.colorGrayLight);
 
         //if the position is equals to the item position which is to be expanded
         if (currentPosition == position) {
-            //creating an animation
-            Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down);
+            holder.tvNewsText.setMaxLines(Integer.MAX_VALUE);
 
-            //toggling visibility
-            holder.tvNewsText.setVisibility(View.VISIBLE);
 
-            //adding sliding effect
-            holder.tvNewsText.startAnimation(slideDown);
 
             holder.icon_expand.animate().rotation(180).start();
         }

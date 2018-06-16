@@ -210,8 +210,15 @@ public class VMClassSchedule extends BaseObservable {
             if(lecturer != null && !lecturer.isEmpty())
                 query = query.and().equalTo("lecturer",lecturer);
 
-            if(groups != null && !groups.isEmpty())
-                query = query.and().contains("studentGroups", groups);
+            if (groups != null && !groups.isEmpty()) {
+                query = query.and().beginGroup();
+
+                query = query.contains("studentGroups", groups.split(" ")[0]);
+                for (int i = 1; i < groups.split(" ").length; i++)
+                    query = query.or().contains("studentGroups", groups.split(" ")[i]);
+
+                query.endGroup();
+            }
 
             if(getSelectedDayOfWeek() != null)
                 query = query.and().equalTo("dayOfWeek", getSelectedDayOfWeek());

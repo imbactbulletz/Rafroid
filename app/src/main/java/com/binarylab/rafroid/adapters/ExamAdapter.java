@@ -53,7 +53,7 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.NewsViewHolder
     }
 
     class NewsViewHolder extends RecyclerView.ViewHolder {
-        TextView tvClassName, tvClassType, tvClassLecturer, tvClassGroup, tvclassDayofweek,
+        TextView tvClassName, tvClassType, tvClassLecturer, tvclassDayofweek,
                 tvClassTime, tvClassClassroom;
         ConstraintLayout clRoot;
 
@@ -63,7 +63,6 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.NewsViewHolder
             tvClassName = itemView.findViewById(R.id.exam_name);
             tvClassType = itemView.findViewById(R.id.exam_type);
             tvClassLecturer = itemView.findViewById(R.id.exam_lecturer);
-            tvClassGroup = itemView.findViewById(R.id.exam_group);
             tvclassDayofweek = itemView.findViewById(R.id.exam_dayofweek);
             tvClassTime = itemView.findViewById(R.id.exam_time);
             tvClassClassroom = itemView.findViewById(R.id.exam_classroom);

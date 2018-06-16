@@ -42,9 +42,12 @@ public class ClassScheduleAdapter extends RecyclerView.Adapter<ClassScheduleAdap
         if(classSchedule.getType().equals("Vezbe") || classSchedule.getType().equals("Laboratorijske vezbe")){
             holder.tvClassType.setText("V");
             holder.tvClassType.setBackgroundResource(R.color.colorPink);
-            Log.d("BOBAN_RAJOVIC","EJ_KOSACIII");
         }
-        else{
+        if(classSchedule.getType().equals("Predavanja i vezbe")){
+            holder.tvClassType.setText("P\ni\nV");
+            holder.tvClassType.setBackgroundResource(R.color.colorPurple);
+        }
+        if(classSchedule.getType().equals("Predavanja")){
             holder.tvClassType.setText("P");
             holder.tvClassType.setBackgroundResource(R.color.colorPrimary);
         }

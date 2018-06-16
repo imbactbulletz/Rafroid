@@ -1,142 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/standard_layout_margin"
         android:layout_marginRight="@dimen/standard_layout_margin"
-        android:layout_marginTop="@dimen/standard_layout_margin"
-        app:cardUseCompatPadding="true">
+        android:layout_marginTop="@dimen/standard_element_margin"
+        android:layout_marginLeft="@dimen/standard_layout_margin"
+        app:cardCornerRadius="12dp">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/class_schedule_item"
-            android:layout_width="match_parent"
+            android:id="@+id/exam_schedule_item"
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:animateLayoutChanges="true">
 
+
             <TextView
-                android:id="@+id/class_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="textStart"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/large_text"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/exam_type"
+                android:layout_width="20dp"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
+                android:maxLength="1"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/constriainter"
+            <TextView
+                android:id="@+id/exam_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/class_name">
-
-                <TextView
-                    android:id="@+id/class_type"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/class_lecturer"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                    app:layout_constraintStart_toStartOf="@+id/guideline2"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/class_group"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="15dp"
-                    android:gravity="end"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/guideline3"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <android.support.constraint.Guideline
-                    android:id="@+id/guideline2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent=".35" />
-
-                <android.support.constraint.Guideline
-                    android:id="@+id/guideline3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent=".75" />
-
-            </android.support.constraint.ConstraintLayout>
-
-
-            <TextView
-                android:id="@+id/class_dayofweek"
-                android:layout_width="0dp"
-                android:layout_height="15dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginStart="15dp"
-                app:layout_constraintBaseline_toBaselineOf="@id/class_classroom"
-                app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintStart_toStartOf="@+id/constriainter"
-                app:layout_constraintTop_toBottomOf="@id/constriainter" />
-
-            <TextView
-                android:id="@+id/class_time"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBaseline_toBaselineOf="@id/class_classroom"
-                app:layout_constraintEnd_toEndOf="@id/guideline5"
-                app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toBottomOf="@id/constriainter" />
-
-
-            <TextView
-                android:id="@+id/class_classroom"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="9dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
-                android:gravity="end"
-                android:paddingBottom="20dp"
+                android:fontFamily="robo"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="monospace"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guideline5"
-                app:layout_constraintTop_toBottomOf="@id/constriainter" />
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/exam_type"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline4"
+            <ImageView
+                android:id="@+id/examCalendarImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".35" />
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@+id/exam_type"
+                app:layout_constraintTop_toBottomOf="@+id/exam_name"
+                app:srcCompat="@drawable/ic_calendar_black_24dp" />
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline5"
+            <TextView
+                android:id="@+id/exam_dayofweek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".75" />
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintStart_toEndOf="@+id/examCalendarImageView"
+                app:layout_constraintTop_toBottomOf="@+id/exam_name" />
+
+            <ImageView
+                android:id="@+id/examTimeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@+id/exam_dayofweek"
+                app:layout_constraintTop_toBottomOf="@+id/exam_name"
+                app:srcCompat="@drawable/ic_time_black_24dp" />
+
+            <TextView
+                android:id="@+id/exam_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintStart_toEndOf="@+id/examTimeImageView"
+                app:layout_constraintTop_toBottomOf="@+id/exam_name" />
+
+            <ImageView
+                android:id="@+id/examClassroomImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@+id/exam_time"
+                app:layout_constraintTop_toBottomOf="@+id/exam_name"
+                app:srcCompat="@drawable/ic_location_black_24dp" />
+
+            <TextView
+                android:id="@+id/exam_classroom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/examClassroomImageView"
+                app:layout_constraintTop_toBottomOf="@+id/exam_name" />
+
+            <ImageView
+                android:id="@+id/examLecturerImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@+id/exam_type"
+                app:layout_constraintTop_toBottomOf="@+id/examCalendarImageView"
+                app:srcCompat="@drawable/ic_baseline_account_circle_24px" />
+
+            <TextView
+                android:id="@+id/exam_lecturer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/examLecturerImageView"
+                app:layout_constraintTop_toBottomOf="@+id/examTimeImageView" />
+
+            <ImageView
+                android:id="@+id/examGroupsImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/exam_type"
+                app:layout_constraintTop_toBottomOf="@+id/examLecturerImageView"
+                app:srcCompat="@drawable/ic_groups_black_24px" />
+
+            <TextView
+                android:id="@+id/exam_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/examGroupsImageView"
+                app:layout_constraintTop_toBottomOf="@+id/exam_lecturer" />
 
         </android.support.constraint.ConstraintLayout>
 

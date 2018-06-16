@@ -7,17 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Transformation;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.model.ClassSchedule;
-import com.binarylab.rafroid.model.News;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ClassScheduleAdapter extends RecyclerView.Adapter<ClassScheduleAdapter.NewsViewHolder> {

@@ -31,7 +31,7 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.NewsViewHolder
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_class_schedule, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_exam, parent, false);
         return new NewsViewHolder(v);
     }
 
@@ -60,13 +60,13 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.NewsViewHolder
         NewsViewHolder(View itemView) {
             super(itemView);
 
-            tvClassName = itemView.findViewById(R.id.class_name);
-            tvClassType = itemView.findViewById(R.id.class_type);
-            tvClassLecturer = itemView.findViewById(R.id.class_lecturer);
-            tvClassGroup = itemView.findViewById(R.id.class_group);
-            tvclassDayofweek = itemView.findViewById(R.id.class_dayofweek);
-            tvClassTime = itemView.findViewById(R.id.class_time);
-            tvClassClassroom = itemView.findViewById(R.id.class_classroom);
+            tvClassName = itemView.findViewById(R.id.exam_name);
+            tvClassType = itemView.findViewById(R.id.exam_type);
+            tvClassLecturer = itemView.findViewById(R.id.exam_lecturer);
+            tvClassGroup = itemView.findViewById(R.id.exam_group);
+            tvclassDayofweek = itemView.findViewById(R.id.exam_dayofweek);
+            tvClassTime = itemView.findViewById(R.id.exam_time);
+            tvClassClassroom = itemView.findViewById(R.id.exam_classroom);
             clRoot = itemView.findViewById(R.id.news_feed_item);
 
         }

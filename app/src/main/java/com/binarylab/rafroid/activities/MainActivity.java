@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.fragments.ClassScheduleFragment;
+import com.binarylab.rafroid.fragments.CurriculumFragment;
 import com.binarylab.rafroid.fragments.ExamFragment;
 import com.binarylab.rafroid.fragments.NewsFragment;
 
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.nav_curriculum_schedule:
                     getSupportActionBar().setTitle(R.string.curriculum_schedule);
+                    mFragmentToSet = CurriculumFragment.newInstance();
                     break;
 
                 case R.id.nav_exam_schedule:

@@ -17,19 +17,19 @@ import com.binarylab.rafroid.model.ExamType;
 import com.binarylab.rafroid.viewmodel.VMExam;
 
 @SuppressLint("ValidFragment")
-public class ExamFragment extends TabFragment {
+public class CurriculumFragment extends TabFragment {
 
     FragmentExamBinding mBinding;
     VMExam mVMExam;
 
-    public static ExamFragment newInstance() {
-        return new ExamFragment();
+    public static CurriculumFragment newInstance() {
+        return new CurriculumFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mVMExam = new VMExam(getContext(), ExamType.EXAM);
+        mVMExam = new VMExam(getContext(), ExamType.CURRICULUM);
     }
 
     @Override

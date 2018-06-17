@@ -58,6 +58,12 @@ public class ExamDAO {
         return realm.where(Exam.class).equalTo("type", ExamType.EXAM.toString()).findAll();
     }
 
+    public List<Exam> getAllCurriculums() {
+        Realm realm = Realm.getDefaultInstance();
+        return realm.where(Exam.class).equalTo("type", ExamType.CURRICULUM.toString()).findAll();
+    }
+
+
     public List<String> getAllDays() {
         List<String> set = new ArrayList<>();
         for (DayOfWeek dayofWeek : DayOfWeek.values())
@@ -95,5 +101,9 @@ public class ExamDAO {
 
     public RealmQuery<Exam> getExamQueryBuilder() {
         return Realm.getDefaultInstance().where(Exam.class).equalTo("type", ExamType.EXAM.toString());
+    }
+
+    public RealmQuery<Exam> getCurriculumQueryBuilder() {
+        return Realm.getDefaultInstance().where(Exam.class).equalTo("type", ExamType.CURRICULUM.toString());
     }
 }

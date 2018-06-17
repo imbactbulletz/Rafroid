@@ -18,6 +18,7 @@ import com.binarylab.rafroid.adapters.ExamAdapter;
 import com.binarylab.rafroid.dao.ExamDAO;
 import com.binarylab.rafroid.model.DayOfWeek;
 import com.binarylab.rafroid.model.Exam;
+import com.binarylab.rafroid.model.ExamType;
 import com.binarylab.rafroid.util.DateUtil;
 
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ import io.realm.RealmQuery;
 public class VMExam extends BaseObservable {
 
     private Context mContext;
+    private ExamType mExamType;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm");
 
@@ -44,14 +46,18 @@ public class VMExam extends BaseObservable {
     private ObservableInt mDayIndex, mClassroomsListIndex;
     private String lecturer, subject, date, time;
 
-    public VMExam(Context context) {
+    public VMExam(Context context, ExamType examType) {
         this.mContext = context;
         isInputVisible = false;
+        this.mExamType = examType;
 
         ExamDAO dao = ExamDAO.getInstance();
 
         mExamList = new ObservableArrayList<>();
-        mExamList.addAll(dao.getAllExams());
+        if (examType == ExamType.EXAM)
+            mExamList.addAll(dao.getAllExams());
+        else if (examType == ExamType.CURRICULUM)
+            mExamList.addAll(dao.getAllCurriculums());
         mAdapter = new ExamAdapter(mExamList, context);
 
         //Filling the Day spinner
@@ -186,7 +192,12 @@ public class VMExam extends BaseObservable {
     public View.OnClickListener onSearchClicked() {
         return v -> {
             ExamDAO dao = ExamDAO.getInstance();
-            RealmQuery<Exam> query = dao.getExamQueryBuilder();
+            RealmQuery<Exam> query;
+
+            if (mExamType == ExamType.EXAM)
+                query = dao.getExamQueryBuilder();
+            else
+                query = dao.getCurriculumQueryBuilder();
 
             if (subject != null && !subject.isEmpty())
                 query = query.and().equalTo("testName", subject);

@@ -249,7 +249,17 @@ public class VMClassSchedule extends BaseObservable {
             int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
             int minute = 15;
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(mContext, (timePicker, selectedHour, selectedMinute) -> setTime( selectedHour + ":" + selectedMinute), hour, minute, true);//Yes 24 hour time
+            mTimePicker = new TimePickerDialog(mContext, (timePicker, selectedHour, selectedMinute) -> {
+                String hourString = selectedHour + "";
+                if (hourString.length() == 1)
+                    hourString = "0" + selectedHour;
+
+                String minuteString = "" + selectedMinute;
+                if (minuteString.length() == 1)
+                    minuteString = "0" + selectedMinute;
+
+                setTime(hourString + ":" + minuteString);
+            }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle(mContext.getString(R.string.select_time));
             mTimePicker.show();
 

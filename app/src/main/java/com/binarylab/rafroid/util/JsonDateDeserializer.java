@@ -18,7 +18,7 @@ public class JsonDateDeserializer implements JsonDeserializer<Date> {
         String dateString = stringDate.split("T")[0];
 
         int year = Integer.valueOf(dateString.split("-")[0]);
-        int month = Integer.valueOf(dateString.split("-")[1]);
+        int month = Integer.valueOf(dateString.split("-")[1]) - 1;
         int day = Integer.valueOf(dateString.split("-")[2]);
 
         int hrs = Integer.valueOf(timeString.split(":")[0]);

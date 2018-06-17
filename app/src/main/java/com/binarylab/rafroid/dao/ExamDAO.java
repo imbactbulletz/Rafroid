@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 
 public class ExamDAO {
 
@@ -68,7 +69,7 @@ public class ExamDAO {
     public List<String> getAllClassrooms() {
         Realm realm = Realm.getDefaultInstance();
         List<String> set = new ArrayList<>();
-        for (Exam exam : realm.where(Exam.class).distinct("classroom").findAll())
+        for (Exam exam : realm.where(Exam.class).distinct("classroom").findAll().sort("classroom"))
             set.add(exam.getClassroom());
 
         return set;
@@ -77,7 +78,7 @@ public class ExamDAO {
     public List<String> getAllLecturers() {
         Realm realm = Realm.getDefaultInstance();
         List<String> set = new ArrayList<>();
-        for (Exam exam : realm.where(Exam.class).distinct("professor").findAll())
+        for (Exam exam : realm.where(Exam.class).distinct("professor").findAll().sort("professor"))
             set.add(exam.getProfessor());
 
         return set;
@@ -90,5 +91,9 @@ public class ExamDAO {
             set.add(exam.getTestName());
 
         return set;
+    }
+
+    public RealmQuery<Exam> getExamQueryBuilder() {
+        return Realm.getDefaultInstance().where(Exam.class).equalTo("type", ExamType.EXAM.toString());
     }
 }

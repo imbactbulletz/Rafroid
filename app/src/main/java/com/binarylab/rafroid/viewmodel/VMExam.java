@@ -16,8 +16,15 @@ import com.binarylab.rafroid.BR;
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.adapters.ExamAdapter;
 import com.binarylab.rafroid.dao.ExamDAO;
+import com.binarylab.rafroid.model.DayOfWeek;
+import com.binarylab.rafroid.model.Exam;
+import com.binarylab.rafroid.util.DateUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import io.realm.RealmQuery;
 
 //TODO: Some fields needs to be sorted out
 //TODO: Maybe add some animation on layout change
@@ -25,12 +32,15 @@ import java.util.Calendar;
 public class VMExam extends BaseObservable {
 
     private Context mContext;
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm");
 
     private ExamAdapter mAdapter;
     private boolean isInputVisible;
 
     private ObservableList<String> mDay, mClassroomsList, mLecturerList,
             mSubjectList;
+    private ObservableList<Exam> mExamList;
     private ObservableInt mDayIndex, mClassroomsListIndex;
     private String lecturer, subject, date, time;
 
@@ -40,7 +50,9 @@ public class VMExam extends BaseObservable {
 
         ExamDAO dao = ExamDAO.getInstance();
 
-        mAdapter = new ExamAdapter(dao.getAllExams(), context);
+        mExamList = new ObservableArrayList<>();
+        mExamList.addAll(dao.getAllExams());
+        mAdapter = new ExamAdapter(mExamList, context);
 
         //Filling the Day spinner
         //TODO: Implement this 1 day
@@ -173,7 +185,47 @@ public class VMExam extends BaseObservable {
     //--------------------------------------------------------------------------------------------//
     public View.OnClickListener onSearchClicked() {
         return v -> {
-            //TODO: ImplementThis
+            ExamDAO dao = ExamDAO.getInstance();
+            RealmQuery<Exam> query = dao.getExamQueryBuilder();
+
+            if (subject != null && !subject.isEmpty())
+                query = query.and().equalTo("testName", subject);
+
+            if (lecturer != null && !lecturer.isEmpty())
+                query = query.and().equalTo("professor", lecturer);
+
+            if (getSelectedClassroom() != null)
+                query = query.and().equalTo("classroom", getSelectedClassroom());
+
+            mExamList.clear();
+            mExamList.addAll(query.findAll());
+
+            if (getSelectedDay() != null) {
+                DayOfWeek selectedDay = DayOfWeek.valueOf(getSelectedDay());
+                for (Exam exam : new ArrayList<>(mExamList)) {
+                    DayOfWeek day = DateUtil.getDayOfWeek(exam.getStartTime());
+
+                    if (day != selectedDay)
+                        mExamList.remove(exam);
+                }
+            }
+
+            if (date != null && !date.isEmpty()) {
+                for (Exam exam : new ArrayList<>(mExamList)) {
+                    if (!date.equals(mDateFormat.format(exam.getStartTime())))
+                        mExamList.remove(exam);
+                }
+            }
+
+            if (time != null && !time.isEmpty()) {
+                for (Exam exam : new ArrayList<>(mExamList)) {
+                    if (!time.equals(mTimeFormat.format(exam.getStartTime())))
+                        mExamList.remove(exam);
+                }
+            }
+
+            mAdapter.notifyDataSetChanged();
+            notifyPropertyChanged(BR.noDataVisible);
             setInputVisible(false);
         };
     }
@@ -188,7 +240,17 @@ public class VMExam extends BaseObservable {
             int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
             int minute = 0;
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(mContext, (timePicker, selectedHour, selectedMinute) -> setTime(selectedHour + ":" + selectedMinute), hour, minute, true);//Yes 24 hour time
+            mTimePicker = new TimePickerDialog(mContext, (timePicker, selectedHour, selectedMinute) -> {
+                String hourString = selectedHour + "";
+                if (hourString.length() == 1)
+                    hourString = "0" + selectedHour;
+
+                String minuteString = "" + selectedMinute;
+                if (minuteString.length() == 1)
+                    minuteString = "0" + selectedMinute;
+
+                setTime(hourString + ":" + minuteString);
+            }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle(mContext.getString(R.string.select_time1));
             mTimePicker.show();
 
@@ -203,7 +265,13 @@ public class VMExam extends BaseObservable {
             int month = mcurrentTime.get(Calendar.MONTH);
             int day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
             mDatePicker = new DatePickerDialog(mContext, (datePicker, selectedYear, selectedMonth, selctedDayOfMonth) -> {
-                setDate(selctedDayOfMonth + "/" + selectedMonth + "/" + selectedYear);
+                selectedMonth++;
+
+                String monthString = selectedMonth + "";
+                if (monthString.length() == 1)
+                    monthString = "0" + monthString;
+
+                setDate(selctedDayOfMonth + "/" + monthString + "/" + selectedYear);
             }, year, month, day);//Yes 24 hour time
             mDatePicker.setTitle(mContext.getString(R.string.select_date));
             mDatePicker.show();

@@ -7,7 +7,6 @@ import com.binarylab.rafroid.model.DayOfWeek;
 import com.binarylab.rafroid.util.DateUtil;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import io.realm.Realm;
@@ -59,10 +58,10 @@ public class ClassScheduleDAO {
         return realm.where(ClassSchedule.class).findAll();
     }
 
-    public HashSet<String> getAllTypes(){
-        HashSet<String> set = new HashSet<>();
+    public List<String> getAllTypes() {
+        List<String> set = new ArrayList<>();
         Realm realm = Realm.getDefaultInstance();
-        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("type").findAll()){
+        for (ClassSchedule sch : realm.where(ClassSchedule.class).distinct("type").findAll().sort("type")) {
             set.add(sch.getType());
         }
 
@@ -81,9 +80,8 @@ public class ClassScheduleDAO {
 
     public List<String> getAllDayOfWeeks() {
         List<String> set = new ArrayList<>();
-        Realm realm = Realm.getDefaultInstance();
-        for(ClassSchedule sch: realm.where(ClassSchedule.class).distinct("dayOfWeek").findAll()){
-            set.add(sch.getDayOfWeek().toString());
+        for (DayOfWeek day : DayOfWeek.values()) {
+            set.add(day.toString());
         }
 
         return set;

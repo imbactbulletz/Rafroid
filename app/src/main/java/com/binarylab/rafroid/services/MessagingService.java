@@ -6,12 +6,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.activities.MainActivity;
@@ -51,10 +51,10 @@ public class MessagingService extends FirebaseMessagingService {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)  //a resource for your custom small icon
+                .setSmallIcon(R.drawable.ic_launcher_round)  //a resource for your custom small icon
                 .setContentTitle(remoteMessage.getData().get("title")) //the "title" value you sent in your notification
                 .setContentText(remoteMessage.getData().get("message")) //ditto
-                .setColor(0x00FFFFFF)
+                .setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary))
                 .setAutoCancel(true)  //dismisses the notification on click
                 .setSound(defaultSoundUri)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
@@ -77,7 +77,7 @@ public class MessagingService extends FirebaseMessagingService {
         adminChannel = new NotificationChannel(ADMIN_CHANNEL_ID, adminChannelName, NotificationManager.IMPORTANCE_HIGH);
         adminChannel.setDescription(adminChannelDescription);
         adminChannel.enableLights(true);
-        adminChannel.setLightColor(Color.RED);
+        adminChannel.setLightColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         adminChannel.enableVibration(true);
         if (notificationManager != null) {
             notificationManager.createNotificationChannel(adminChannel);

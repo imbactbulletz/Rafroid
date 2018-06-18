@@ -9,6 +9,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -16,25 +17,39 @@ import com.binarylab.rafroid.BR;
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.adapters.ConsultationsAdapter;
 import com.binarylab.rafroid.dao.ConsultationDAO;
+import com.binarylab.rafroid.model.Consultation;
+import com.binarylab.rafroid.model.DayOfWeek;
+import com.binarylab.rafroid.util.DateUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import io.realm.RealmQuery;
 
 public class VMConsultations extends BaseObservable {
     private Context mContext;
+    private SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm");
 
     private ConsultationsAdapter mAdapter;
     private boolean isInputVisible;
 
     private ObservableList<String> mDay, mClassroomsList, mLecturerList, mSubjectList;
+    private ObservableList<Consultation> mConsultationList;
     private ObservableInt mDayIndex, mClassroomsListIndex;
-    private String day, lecturer, classroom, subject, time;
+    private String lecturer, subject, time;
 
     public VMConsultations(Context context){
         this.mContext = context;
         isInputVisible = false;
 
         ConsultationDAO dao = ConsultationDAO.getInstance();
-        mAdapter = new ConsultationsAdapter(dao.getAllConsultations(), context);
+
+
+        mConsultationList = new ObservableArrayList<>();
+        mConsultationList.addAll(dao.getAllConsultations());
+
+        mAdapter = new ConsultationsAdapter(mConsultationList, context);
 
 
         // Filling the day spinner
@@ -160,8 +175,50 @@ public class VMConsultations extends BaseObservable {
     //Action Commands
     public View.OnClickListener onSearchClicked() {
         return v -> {
-            //TODO: ImplementThis
+            ConsultationDAO dao = ConsultationDAO.getInstance();
+            RealmQuery<Consultation> query = dao.getConsultationQueryBuilder();
+
+            if(subject != null && !subject.isEmpty()){
+                query = query.and().equalTo("className", subject);
+            }
+
+            if(lecturer != null && !lecturer.isEmpty()){
+                query = query.and().equalTo("lecturer", lecturer);
+            }
+
+            if(getSelectedClassroom() != null){
+                query = query.and().equalTo("classroom", getSelectedClassroom());
+            }
+
+
+            mConsultationList.clear();
+            mConsultationList.addAll(query.findAll());
+
+            if(getSelectedDay() != null){
+                DayOfWeek selectedDay = DayOfWeek.valueOf(getSelectedDay());
+
+                for(Consultation consultation : new ArrayList<>(mConsultationList)){
+                    DayOfWeek day = DateUtil.getDayOfWeek(consultation.getStartTime());
+
+                    if(day != selectedDay){
+                        mConsultationList.remove(day);
+                    }
+                }
+
+            }
+
+            if(time != null && !time.isEmpty()){
+                for(Consultation consultation : new ArrayList<>(mConsultationList)){
+                    if(!time.equals(mTimeFormat.format(consultation.getStartTime()))){
+                        mConsultationList.remove(consultation);
+                    }
+                }
+            }
+
+            mAdapter.notifyDataSetChanged();
+            notifyPropertyChanged(BR.noDataVisible);
             setInputVisible(false);
+
         };
     }
 

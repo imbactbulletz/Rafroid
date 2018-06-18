@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 
 public class ConsultationDAO {
 
@@ -94,5 +95,9 @@ public class ConsultationDAO {
             set.add(consultation.getClassName());
 
         return set;
+    }
+
+    public RealmQuery<Consultation> getConsultationQueryBuilder(){
+        return Realm.getDefaultInstance().where(Consultation.class);
     }
 }

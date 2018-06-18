@@ -29,9 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Fragment mFragmentToSet = null;
 
+    public static boolean isAppRunning;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isAppRunning = true;
         setContentView(R.layout.activity_main);
 
         //Setting default toolbar to be our toolbar
@@ -182,4 +185,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isAppRunning = false;
+    }
 }

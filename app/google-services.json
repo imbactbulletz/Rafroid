@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "645522927902",
+    "firebase_url": "https://rafroid-3fc2a.firebaseio.com",
+    "project_id": "rafroid-3fc2a",
+    "storage_bucket": "rafroid-3fc2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645522927902:android:43ef24beb2eae332",
+        "android_client_info": {
+          "package_name": "com.binarylab.rafroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645522927902-gnfa6al0u4928rucv38adu9e4cqpvble.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "645522927902-gnfa6al0u4928rucv38adu9e4cqpvble.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDosKem8wFLaNPHBrN1gRpUqTG9Qz7ryUg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

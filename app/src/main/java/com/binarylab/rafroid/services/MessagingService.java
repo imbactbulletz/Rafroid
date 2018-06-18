@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class MessagingService extends FirebaseMessagingService {
 
-    private static String ADMIN_CHANNEL_ID = "admin_channel";
+    private static String ADMIN_CHANNEL_ID = "rafroid_admin_channel";
     private NotificationManager notificationManager;
 
     @Override

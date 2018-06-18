@@ -73,7 +73,7 @@ public class ConsultationDAO {
     public List<String> getAllClassrooms() {
         Realm realm = Realm.getDefaultInstance();
         List<String> set = new ArrayList<>();
-        for (Consultation consultation : realm.where(Consultation.class).distinct("classroom").findAll())
+        for (Consultation consultation : realm.where(Consultation.class).distinct("classroom").findAll().sort("classroom"))
             set.add(consultation.getClassroom());
 
         return set;
@@ -82,7 +82,7 @@ public class ConsultationDAO {
     public List<String> getAllLecturers() {
         Realm realm = Realm.getDefaultInstance();
         List<String> set = new ArrayList<>();
-        for (Consultation consultation: realm.where(Consultation.class).distinct("lecturer").findAll())
+        for (Consultation consultation: realm.where(Consultation.class).distinct("lecturer").findAll().sort("lecturer"))
             set.add(consultation.getLecturer());
 
         return set;
@@ -91,7 +91,7 @@ public class ConsultationDAO {
     public List<String> getAllSubjects() {
         Realm realm = Realm.getDefaultInstance();
         List<String> set = new ArrayList<>();
-        for (Consultation consultation : realm.where(Consultation.class).distinct("className").findAll())
+        for (Consultation consultation : realm.where(Consultation.class).distinct("className").findAll().sort("className"))
             set.add(consultation.getClassName());
 
         return set;

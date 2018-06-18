@@ -54,6 +54,7 @@ public class MessagingService extends FirebaseMessagingService {
                 .setSmallIcon(R.mipmap.ic_launcher)  //a resource for your custom small icon
                 .setContentTitle(remoteMessage.getData().get("title")) //the "title" value you sent in your notification
                 .setContentText(remoteMessage.getData().get("message")) //ditto
+                .setColor(0x00FFFFFF)
                 .setAutoCancel(true)  //dismisses the notification on click
                 .setSound(defaultSoundUri)
                 .setDefaults(Notification.DEFAULT_VIBRATE)

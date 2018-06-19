@@ -36,6 +36,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="no_data_for_showing">Nema podataka za prikazivnaje</string>
+
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -115,4 +116,7 @@
     <string name="clear_data_dialog_message">Da li ste sigurni da zelite da izbrisete sve kesirane podatke?</string>
     <string name="cached_data_deleted">Kesirani podaci obrisani. Preporucuje se preuzimanje novih podataka</string>
     <string name="dark_theme">Mracna tema aplikacije</string>
+
+    <string name="notifications_admin_channel_name">rafroid notification channel</string>
+    <string name="notifications_admin_channel_description">rafroid default notification channel</string>
 </resources>

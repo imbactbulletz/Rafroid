@@ -12,4 +12,5 @@
     <color name="colorPink">#ff0096</color>
     <color name="colorOker">#fdc16c</color>
     <color name="colorGrayLight">#828282</color>
+    <color name="colorTransparent">#00FFFFFF</color>
 </resources>

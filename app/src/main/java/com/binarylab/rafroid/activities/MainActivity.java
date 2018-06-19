@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.fragments.ClassScheduleFragment;
+import com.binarylab.rafroid.fragments.ConsultationsFragment;
 import com.binarylab.rafroid.fragments.CurriculumFragment;
 import com.binarylab.rafroid.fragments.ExamFragment;
 import com.binarylab.rafroid.fragments.NewsFragment;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Fragment mFragmentToSet = null;
 
+    public static boolean isAppRunning;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("theme", false)){
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
+        isAppRunning = true;
         setContentView(R.layout.activity_main);
 
         //Setting default toolbar to be our toolbar
@@ -111,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.nav_consultation_schedule:
                     getSupportActionBar().setTitle(R.string.consultation_schedule);
+                    mFragmentToSet = ConsultationsFragment.newInstance();
                     break;
 
                 case R.id.nav_news:
@@ -203,4 +208,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isAppRunning = false;
+    }
 }

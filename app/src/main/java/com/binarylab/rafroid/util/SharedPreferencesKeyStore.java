@@ -7,4 +7,5 @@ public class SharedPreferencesKeyStore {
     public static final String CALENDAR_VERSION = "calendar-version";
     public static final String CONSULTATIONS_VERSION = "consultations-version";
     public static final String NEWS_VERSION = "news-version";
+    public static final String FIREBASE_TOKEN = "firebase_token";
 }

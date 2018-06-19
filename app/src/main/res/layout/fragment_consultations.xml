@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.binarylab.rafroid.viewmodel.VMConsultations" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{vm.inputVisible ? View.VISIBLE : View.GONE}">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/standard_layout_margin"
+                    android:layout_marginEnd="@dimen/standard_layout_margin"
+                    android:layout_marginStart="@dimen/standard_layout_margin"
+                    android:layout_marginTop="@dimen/standard_layout_margin"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <android.support.v7.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spSubject"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/standard_layout_margin"
+                            android:layout_marginStart="@dimen/standard_layout_margin"
+                            android:layout_marginTop="@dimen/standard_layout_margin"
+                            android:ems="0"
+                            android:hint="@string/subject"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:text="@={vm.subject}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <android.support.v7.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/spLecturer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/standard_layout_margin"
+                            android:layout_marginStart="@dimen/standard_layout_margin"
+                            android:layout_marginTop="@dimen/standard_element_margin"
+                            android:ems="1"
+                            android:hint="@string/professor"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:text="@={vm.lecturer}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/spSubject" />
+
+
+                        <Spinner
+                            android:id="@+id/spClassroom"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/standard_layout_margin"
+                            android:layout_marginStart="@dimen/standard_layout_margin"
+                            android:layout_marginTop="@dimen/standard_element_margin"
+                            android:entries="@{vm.classroomsList}"
+                            android:selectedItemPosition="@={vm.classroomsListIndex}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/spLecturer" />
+
+                        <EditText
+                            android:id="@+id/spTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/standard_layout_margin"
+                            android:layout_marginStart="@dimen/standard_layout_margin"
+                            android:layout_marginTop="@dimen/standard_element_margin"
+                            android:ems="3"
+                            android:hint="@string/time1"
+                            android:imeOptions="actionDone"
+                            android:inputType="date"
+                            android:onClick="@{vm.onTimeClicked}"
+                            android:text="@={vm.time}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/spClassroom" />
+
+                        <Spinner
+                            android:id="@+id/spDay"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/standard_layout_margin"
+                            android:layout_marginStart="@dimen/standard_layout_margin"
+                            android:layout_marginTop="@dimen/standard_element_margin"
+                            android:entries="@{vm.day}"
+                            android:selectedItemPosition="@={vm.dayIndex}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/spTime" />
+
+
+
+                        <Button
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/standard_layout_margin"
+                            android:layout_marginEnd="@dimen/standard_layout_margin"
+                            android:layout_marginStart="@dimen/standard_layout_margin"
+                            android:layout_marginTop="@dimen/standard_element_margin"
+                            android:background="@color/colorPrimary"
+                            android:ems="4"
+                            android:onClick="@{vm.onSearchClicked}"
+                            android:text="@string/search_it"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/spDay" />
+
+
+                    </android.support.constraint.ConstraintLayout>
+                </android.support.v7.widget.CardView>
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{vm.inputVisible ? View.GONE : View.VISIBLE}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/consultations_schedule"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adapter="@{vm.consultationsAdapter}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="@dimen/standard_large_margin"
+                android:layout_marginEnd="@dimen/standard_large_margin"
+                android:onClick="@{vm.onFilterClicked}"
+                android:src="@drawable/ic_filter_white"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/standard_layout_margin"
+                android:layout_marginStart="@dimen/standard_layout_margin"
+                android:layout_marginTop="@dimen/standard_layout_margin"
+                android:text="@string/no_data_for_showing"
+                android:visibility="@{vm.noDataVisible? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
+</layout>

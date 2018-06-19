@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.events.LoadingFinishedEvent;
 import com.binarylab.rafroid.fragments.SplashScreenFragment;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,6 +33,9 @@ public class SplashScreenActivity extends SingleFragmentActivity {
 
         // Initialize Preferences
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+
+        // Subscribe to all messages
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.binarylab.rafroid.activities;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import com.binarylab.rafroid.fragments.ClassScheduleFragment;
 import com.binarylab.rafroid.fragments.CurriculumFragment;
 import com.binarylab.rafroid.fragments.ExamFragment;
 import com.binarylab.rafroid.fragments.NewsFragment;
+import com.binarylab.rafroid.fragments.SettingsFragment;
 
 import java.util.Objects;
 
@@ -31,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("theme", false)){
+            setTheme(R.style.AppThemeDark);
+        }else
+            setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -112,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_settings:
+                    mFragmentToSet = SettingsFragment.newInstance();
                     getSupportActionBar().setTitle(R.string.settings);
                     break;
 
@@ -156,14 +164,27 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            fragmentTransaction.add(R.id.fragment_container, NewsFragment.newInstance());
+            mFragmentToSet = NewsFragment.newInstance();
+            int selectedIndex = 5;
+            int title = R.string.news;
+            if(getIntent().getExtras() != null){
+                if(getIntent().getExtras().getString("fragment") != null){
+                    if(getIntent().getExtras().getString("fragment").equals("settings")){
+                        mFragmentToSet = SettingsFragment.newInstance();
+                        selectedIndex = 6;
+                        title = R.string.settings;
+                    }
+                }
+            }
+
+            fragmentTransaction.add(R.id.fragment_container, mFragmentToSet);
             fragmentTransaction.commit();
 
             //Set title
-            getSupportActionBar().setTitle(R.string.news);
+            getSupportActionBar().setTitle(title);
 
             //Set selection of the news inside the menu
-            navigationView.getMenu().getItem(5).setChecked(true);
+            navigationView.getMenu().getItem(selectedIndex).setChecked(true);
         }
 
         if(getIntent().getExtras() != null && getIntent().getExtras().getBoolean("showConnectionError")){

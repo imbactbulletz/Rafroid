@@ -30,6 +30,7 @@
             android:src="@drawable/ic_raf_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/colorPrimary"
             app:layout_constraintTop_toTopOf="@+id/guideline" />
 
         <ProgressBar

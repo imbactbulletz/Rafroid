@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:title="@string/clear_cache_data"
+        android:key="@string/clear_cache_data"/>
+
+
+    <Preference
+        android:title="@string/update_data"
+        android:key="@string/update_data"/>
+
+    <SwitchPreference
+        android:defaultValue="light"
+        android:key="theme"
+        android:title="@string/dark_theme"/>
+
+</PreferenceScreen>

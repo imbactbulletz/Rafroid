@@ -2,6 +2,7 @@ package com.binarylab.rafroid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
@@ -29,6 +30,9 @@ public class SplashScreenActivity extends SingleFragmentActivity {
 
         // Initialize Realm (just once per application)
         Realm.init(getApplicationContext());
+
+        // Initialize Preferences
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
     }
 
     @Override

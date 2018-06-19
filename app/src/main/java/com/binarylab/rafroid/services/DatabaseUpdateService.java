@@ -25,6 +25,7 @@ import java.io.IOException;
 public class DatabaseUpdateService extends AsyncTask {
 
     private Context mContext;
+    private boolean error = false;
     DatabaseUpdateServiceMessage messageService;
     ApiImpl api;
 
@@ -43,6 +44,7 @@ public class DatabaseUpdateService extends AsyncTask {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        error = false;
         messageService.setMessage(mContext.getString(R.string.checking_for_update));
     }
 
@@ -57,7 +59,7 @@ public class DatabaseUpdateService extends AsyncTask {
             checkConsultationsVersion();
             checkNewsVersion();
         } catch (IOException e) {
-            messageService.notifyError();
+            error = true;
         }
 
 
@@ -68,7 +70,10 @@ public class DatabaseUpdateService extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
 
-        messageService.onPostUpdate();
+        if (error)
+            messageService.notifyError();
+        else
+            messageService.onPostUpdate();
     }
 
     private void checkExamsVersion() throws IOException {

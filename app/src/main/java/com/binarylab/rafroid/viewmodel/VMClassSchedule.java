@@ -5,17 +5,21 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.binarylab.rafroid.BR;
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.adapters.ClassScheduleAdapter;
 import com.binarylab.rafroid.dao.ClassScheduleDAO;
 import com.binarylab.rafroid.model.ClassSchedule;
+import com.binarylab.rafroid.services.DatabaseUpdateService;
+import com.binarylab.rafroid.services.DatabaseUpdateServiceMessage;
 
 import java.util.Calendar;
 
@@ -23,7 +27,7 @@ import io.realm.RealmQuery;
 
 //TODO: Some fields needs to be sorted out
 //TODO: Maybe add some animation on layout change
-public class VMClassSchedule extends BaseObservable {
+public class VMClassSchedule extends BaseObservable implements DatabaseUpdateServiceMessage{
 
     private Context mContext;
 
@@ -35,6 +39,7 @@ public class VMClassSchedule extends BaseObservable {
     private String lecturer, subject, groups, time;
 
     private ObservableList<ClassSchedule> mClassScheduleList;
+    private ObservableBoolean isLoading = new ObservableBoolean(false);
     private ClassScheduleAdapter mClassScheduleAdapter;
 
     public VMClassSchedule(Context context) {
@@ -193,6 +198,10 @@ public class VMClassSchedule extends BaseObservable {
         return mClassScheduleAdapter.getItemCount() <= 0;
     }
 
+    @Bindable
+    public ObservableBoolean getIsLoading(){
+        return isLoading;
+    }
 
     //Action Commands//
     //--------------------------------------------------------------------------------------------//
@@ -264,5 +273,64 @@ public class VMClassSchedule extends BaseObservable {
             mTimePicker.show();
 
         };
+    }
+
+    public void onRefresh(){
+        DatabaseUpdateService service = new DatabaseUpdateService(this, mContext);
+        service.execute();
+        isLoading.set(true);
+    }
+
+    @Override
+    public void setMessage(String message) {
+        //Ignore
+    }
+
+    @Override
+    public void notifyError() {
+        Toast.makeText(mContext, mContext.getString(R.string.error_connecting_to_server), Toast.LENGTH_SHORT).show();
+        isLoading.set(false);
+    }
+
+    @Override
+    public void onPostUpdate() {
+        ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
+        RealmQuery<ClassSchedule> query = dao.getQueryBuilder();
+
+        if(subject != null && !subject.isEmpty())
+            query = query.and().equalTo("className", subject);
+
+        if(getSelectedTypeItem() != null)
+            query = query.and().equalTo("type", getSelectedTypeItem());
+
+        if(lecturer != null && !lecturer.isEmpty())
+            query = query.and().equalTo("lecturer",lecturer);
+
+        if (groups != null && !groups.isEmpty()) {
+            query = query.and().beginGroup();
+
+            query = query.contains("studentGroups", groups.split(" ")[0]);
+            for (int i = 1; i < groups.split(" ").length; i++)
+                query = query.or().contains("studentGroups", groups.split(" ")[i]);
+
+            query.endGroup();
+        }
+
+        if(getSelectedDayOfWeek() != null)
+            query = query.and().equalTo("dayOfWeek", getSelectedDayOfWeek());
+
+        if(getSelectedClassroom() != null)
+            query = query.and().equalTo("classroom", getSelectedClassroom());
+
+        if(time != null && !time.isEmpty())
+            query = query.and().equalTo("startTime", time);
+
+        mClassScheduleList.clear();
+        mClassScheduleList.addAll(query.findAll());
+
+
+        mClassScheduleAdapter.notifyDataSetChanged();
+        notifyPropertyChanged(BR.noDataVisible);
+        isLoading.set(false);
     }
 }

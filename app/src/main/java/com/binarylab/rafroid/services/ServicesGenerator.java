@@ -21,8 +21,8 @@ public class ServicesGenerator {
             .create();
 
     private static final OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(20, TimeUnit.MINUTES)
-            .readTimeout(20, TimeUnit.MINUTES).build();
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS).build();
 
     private static Retrofit.Builder builder =
             new Retrofit.Builder()

@@ -29,11 +29,11 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:cardUseCompatPadding="true"
                     android:layout_marginBottom="@dimen/standard_layout_margin"
                     android:layout_marginEnd="@dimen/standard_layout_margin"
                     android:layout_marginStart="@dimen/standard_layout_margin"
                     android:layout_marginTop="@dimen/standard_layout_margin"
+                    app:cardUseCompatPadding="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -47,14 +47,14 @@
                             android:id="@+id/spSubject"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
                             android:layout_marginEnd="@dimen/standard_layout_margin"
                             android:layout_marginStart="@dimen/standard_layout_margin"
                             android:layout_marginTop="@dimen/standard_layout_margin"
-                            android:hint="@string/subject"
-                            android:text="@={vm.subject}"
-                            android:imeOptions="actionNext"
                             android:ems="0"
+                            android:hint="@string/subject"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:text="@={vm.subject}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -76,14 +76,14 @@
                             android:id="@+id/spLecturer"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:ems="1"
                             android:layout_marginEnd="@dimen/standard_layout_margin"
                             android:layout_marginStart="@dimen/standard_layout_margin"
                             android:layout_marginTop="@dimen/standard_element_margin"
+                            android:ems="1"
                             android:hint="@string/lecturer"
-                            android:text="@={vm.lecturer}"
                             android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:text="@={vm.lecturer}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/spType" />
@@ -92,14 +92,14 @@
                             android:id="@+id/spGroups"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:ems="2"
                             android:layout_marginEnd="@dimen/standard_layout_margin"
                             android:layout_marginStart="@dimen/standard_layout_margin"
                             android:layout_marginTop="@dimen/standard_element_margin"
+                            android:ems="2"
                             android:hint="@string/groups"
-                            android:text="@={vm.groups}"
                             android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:text="@={vm.groups}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/spLecturer" />
@@ -120,16 +120,16 @@
                         <EditText
                             android:id="@+id/spTime"
                             android:layout_width="0dp"
-                            android:ems="3"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/standard_layout_margin"
                             android:layout_marginStart="@dimen/standard_layout_margin"
                             android:layout_marginTop="@dimen/standard_element_margin"
+                            android:ems="3"
                             android:hint="@string/time"
-                            android:inputType="time"
-                            android:text="@={vm.time}"
-                            android:onClick="@{vm.onTimeClicked}"
                             android:imeOptions="actionDone"
+                            android:inputType="time"
+                            android:onClick="@{vm.onTimeClicked}"
+                            android:text="@={vm.time}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/spDayOfWeek" />
@@ -157,10 +157,10 @@
                             android:layout_marginStart="@dimen/standard_layout_margin"
                             android:layout_marginTop="@dimen/standard_element_margin"
                             android:background="@color/colorPrimary"
-                            android:text="@string/search_it"
                             android:ems="4"
                             android:imeOptions="actionGo"
                             android:onClick="@{vm.onSearchClicked}"
+                            android:text="@string/search_it"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -177,15 +177,23 @@
             android:layout_height="match_parent"
             android:visibility="@{vm.inputVisible ? View.GONE : View.VISIBLE}">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/class_schedule_search"
+            <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:adapter="@{vm.classScheduleAdapter}"
+                app:refreshing="@{vm.isLoading}"
+                app:onRefreshListener="@{() -> vm.onRefresh()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/class_schedule_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adapter="@{vm.classScheduleAdapter}" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
 
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="56dp"

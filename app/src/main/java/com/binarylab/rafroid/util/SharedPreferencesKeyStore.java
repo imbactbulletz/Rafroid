@@ -8,4 +8,7 @@ public class SharedPreferencesKeyStore {
     public static final String CONSULTATIONS_VERSION = "consultations-version";
     public static final String NEWS_VERSION = "news-version";
     public static final String FIREBASE_TOKEN = "firebase_token";
+    public static final String USER_GROUPS = "userGroups";
+    public static final String USER_SUBJECTS = "userSubjects";
+    public static final String USER_FILTER = "userFilter";
 }

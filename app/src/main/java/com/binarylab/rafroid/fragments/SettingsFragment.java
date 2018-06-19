@@ -24,6 +24,7 @@ import com.binarylab.rafroid.util.SharedPreferencesKeyStore;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import io.realm.Realm;
 
@@ -130,6 +131,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Databa
         CharSequence[] cs = list.toArray(new CharSequence[list.size()]);
         userSubjects.setEntries(cs);
         userSubjects.setEntryValues(cs);
+        userSubjects.setOnPreferenceChangeListener((preference, newValue) -> {
+            try {
+                //noinspection unchecked
+                Set<String> selectedAccounts = (Set<String>) newValue;
+                if (selectedAccounts != null) {
+                    SharedPreferences.Editor ed = pref.edit();
+                    ed.putStringSet("userSubjects", selectedAccounts);
+                    ed.apply();
+                    return true;
+                }
+            } catch (ClassCastException ignored) {
+            }
+           return true;
+        });
 
 
         //Filter Switch

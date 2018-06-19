@@ -1,13 +1,19 @@
 package com.binarylab.rafroid.dao;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.binarylab.rafroid.dto.ClassDTO;
 import com.binarylab.rafroid.dto.ClassesDTO;
 import com.binarylab.rafroid.model.ClassSchedule;
 import com.binarylab.rafroid.model.DayOfWeek;
 import com.binarylab.rafroid.util.DateUtil;
+import com.binarylab.rafroid.util.SharedPreferencesKeyStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -56,6 +62,28 @@ public class ClassScheduleDAO {
     public List<ClassSchedule> getAll(){
         Realm realm = Realm.getDefaultInstance();
         return realm.where(ClassSchedule.class).findAll();
+    }
+
+    public List<ClassSchedule> getAllPresonlized(SharedPreferences sharedPreferences){
+        Realm realm = Realm.getDefaultInstance();
+        RealmQuery<ClassSchedule> query = realm.where(ClassSchedule.class).and();
+
+        String stringGroups = sharedPreferences.getString(SharedPreferencesKeyStore.USER_GROUPS, null);
+        Set<String> subjects = sharedPreferences.getStringSet(SharedPreferencesKeyStore.USER_SUBJECTS, null);
+
+        if(stringGroups != null && !stringGroups.isEmpty()){
+            query = query.beginGroup();
+
+            query = query.contains("studentGroups", stringGroups.split(" ")[0]);
+            for (int i = 1; i < stringGroups.split(" ").length; i++)
+                query = query.or().contains("studentGroups", stringGroups.split(" ")[i]);
+
+            query.endGroup();
+        }
+
+        //TODO: needs to be extended by the subjects
+
+        return query.findAll();
     }
 
     public List<String> getAllTypes() {

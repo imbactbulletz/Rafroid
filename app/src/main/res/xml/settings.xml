@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:title="@string/clear_cache_data"
-        android:key="@string/clear_cache_data"/>
+    <PreferenceCategory
+        android:title="@string/personalization">
+
+        <EditTextPreference
+            android:key="userGroups"
+            android:title="@string/groups"/>
+
+        <MultiSelectListPreference
+            android:key="userSubjects"
+            android:title="@string/subjects"/>
+
+        <SwitchPreference
+            android:key="userFilter"
+            android:title="@string/filter_personalization"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/view">
+
+        <SwitchPreference
+            android:key="theme"
+            android:title="@string/dark_theme" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/data">
+        <Preference
+            android:key="@string/clear_cache_data"
+            android:title="@string/clear_cache_data" />
 
 
-    <Preference
-        android:title="@string/update_data"
-        android:key="@string/update_data"/>
-
-    <SwitchPreference
-        android:defaultValue="light"
-        android:key="theme"
-        android:title="@string/dark_theme"/>
+        <Preference
+            android:key="@string/update_data"
+            android:title="@string/update_data" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

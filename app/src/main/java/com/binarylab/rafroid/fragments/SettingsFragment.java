@@ -5,19 +5,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Process;
+import android.support.v14.preference.MultiSelectListPreference;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
+import com.binarylab.rafroid.dao.ClassScheduleDAO;
+import com.binarylab.rafroid.model.ClassSchedule;
 import com.binarylab.rafroid.services.DatabaseUpdateService;
 import com.binarylab.rafroid.services.DatabaseUpdateServiceMessage;
 import com.binarylab.rafroid.util.SharedPreferencesKeyStore;
 
+import java.util.List;
 import java.util.Objects;
 
 import io.realm.Realm;
@@ -104,6 +109,45 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Databa
             intent.putExtra("fragment", "settings");
             getActivity().startActivity(intent);
 
+            return true;
+        });
+
+        //UserGroups EditText
+        EditTextPreference editGroups = (EditTextPreference) findPreference("userGroups");
+        editGroups.setText(pref.getString("userGroups",""));
+        editGroups.setOnPreferenceChangeListener((preference, newValue) -> {
+            SharedPreferences.Editor ed = pref.edit();
+            ed.putString("userGroups", (String) newValue);
+            ed.apply();
+            return true;
+        });
+
+        //UserSubjects MultiSelection
+        //TODO: Work in progress
+        MultiSelectListPreference userSubjects = (MultiSelectListPreference) findPreference("userSubjects");
+        ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
+        List<String> list = dao.getAllSubjects();
+        CharSequence[] cs = list.toArray(new CharSequence[list.size()]);
+        userSubjects.setEntries(cs);
+        userSubjects.setEntryValues(cs);
+
+
+        //Filter Switch
+        SwitchPreference filter = (SwitchPreference) findPreference("userFilter");
+        if(pref.getBoolean("userFilter", false))
+            filter.setChecked(true);
+        else
+            filter.setChecked(false);
+
+        filter.setOnPreferenceChangeListener((preference, newValue) -> {
+            SharedPreferences.Editor ed = pref.edit();
+            if((Boolean) newValue){
+                ed.putBoolean("userFilter", true);
+            }else {
+                ed.putBoolean("userFilter", false);
+            }
+
+            ed.apply();
             return true;
         });
     }

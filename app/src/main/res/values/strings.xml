@@ -119,4 +119,9 @@
 
     <string name="notifications_admin_channel_name">rafroid notification channel</string>
     <string name="notifications_admin_channel_description">rafroid default notification channel</string>
+    <string name="data">Podaci</string>
+    <string name="view">Izgled</string>
+    <string name="personalization">Presonalizacija</string>
+    <string name="subjects">Predmeti</string>
+    <string name="filter_personalization">Personalizacija filtera</string>
 </resources>

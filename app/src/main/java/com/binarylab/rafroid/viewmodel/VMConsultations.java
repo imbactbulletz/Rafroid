@@ -6,12 +6,14 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.binarylab.rafroid.BR;
 import com.binarylab.rafroid.R;
@@ -19,6 +21,8 @@ import com.binarylab.rafroid.adapters.ConsultationsAdapter;
 import com.binarylab.rafroid.dao.ConsultationDAO;
 import com.binarylab.rafroid.model.Consultation;
 import com.binarylab.rafroid.model.DayOfWeek;
+import com.binarylab.rafroid.services.DatabaseUpdateService;
+import com.binarylab.rafroid.services.DatabaseUpdateServiceMessage;
 import com.binarylab.rafroid.util.DateUtil;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +31,7 @@ import java.util.Calendar;
 
 import io.realm.RealmQuery;
 
-public class VMConsultations extends BaseObservable {
+public class VMConsultations extends BaseObservable implements DatabaseUpdateServiceMessage{
     private Context mContext;
     private SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm");
 
@@ -36,6 +40,7 @@ public class VMConsultations extends BaseObservable {
 
     private ObservableList<String> mDay, mClassroomsList, mLecturerList, mSubjectList;
     private ObservableList<Consultation> mConsultationList;
+    private ObservableBoolean isLoading = new ObservableBoolean(false);
     private ObservableInt mDayIndex, mClassroomsListIndex;
     private String lecturer, subject, time;
 
@@ -170,9 +175,13 @@ public class VMConsultations extends BaseObservable {
         return mAdapter.getItemCount() <= 0;
     }
 
+    @Bindable
+    public ObservableBoolean getIsLoading(){
+        return isLoading;
+    }
 
-
-    //Action Commands
+    //Action Commands//
+    //--------------------------------------------------------------------------------------------//
     public View.OnClickListener onSearchClicked() {
         return v -> {
             ConsultationDAO dao = ConsultationDAO.getInstance();
@@ -237,5 +246,69 @@ public class VMConsultations extends BaseObservable {
             mTimePicker.show();
 
         };
+    }
+
+    public void onRefresh(){
+        DatabaseUpdateService service = new DatabaseUpdateService(this, mContext);
+        service.execute();
+        isLoading.set(true);
+    }
+
+    @Override
+    public void setMessage(String message) {
+        //Ignore
+    }
+
+    @Override
+    public void notifyError() {
+        Toast.makeText(mContext, mContext.getString(R.string.error_connecting_to_server), Toast.LENGTH_SHORT).show();
+        isLoading.set(false);
+    }
+
+    @Override
+    public void onPostUpdate() {
+        ConsultationDAO dao = ConsultationDAO.getInstance();
+        RealmQuery<Consultation> query = dao.getConsultationQueryBuilder();
+
+        if(subject != null && !subject.isEmpty()){
+            query = query.and().equalTo("className", subject);
+        }
+
+        if(lecturer != null && !lecturer.isEmpty()){
+            query = query.and().equalTo("lecturer", lecturer);
+        }
+
+        if(getSelectedClassroom() != null){
+            query = query.and().equalTo("classroom", getSelectedClassroom());
+        }
+
+
+        mConsultationList.clear();
+        mConsultationList.addAll(query.findAll());
+
+        if(getSelectedDay() != null){
+            DayOfWeek selectedDay = DayOfWeek.valueOf(getSelectedDay());
+
+            for(Consultation consultation : new ArrayList<>(mConsultationList)){
+                DayOfWeek day = DateUtil.getDayOfWeek(consultation.getStartTime());
+
+                if(day != selectedDay){
+                    mConsultationList.remove(day);
+                }
+            }
+
+        }
+
+        if(time != null && !time.isEmpty()){
+            for(Consultation consultation : new ArrayList<>(mConsultationList)){
+                if(!time.equals(mTimeFormat.format(consultation.getStartTime()))){
+                    mConsultationList.remove(consultation);
+                }
+            }
+        }
+
+        mAdapter.notifyDataSetChanged();
+        notifyPropertyChanged(BR.noDataVisible);
+        isLoading.set(false);
     }
 }

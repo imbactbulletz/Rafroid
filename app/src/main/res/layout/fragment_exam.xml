@@ -165,15 +165,28 @@
             android:layout_height="match_parent"
             android:visibility="@{vm.inputVisible ? View.GONE : View.VISIBLE}">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/exam_schedule"
+
+            <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:adapter="@{vm.examAdapter}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:onRefreshListener="@{() -> vm.onRefresh()}"
+                app:refreshing="@{vm.isLoading}">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/exam_schedule"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:adapter="@{vm.examAdapter}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
 
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="56dp"

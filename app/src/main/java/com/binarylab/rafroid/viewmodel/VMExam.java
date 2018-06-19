@@ -6,11 +6,13 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.binarylab.rafroid.BR;
 import com.binarylab.rafroid.R;
@@ -19,6 +21,8 @@ import com.binarylab.rafroid.dao.ExamDAO;
 import com.binarylab.rafroid.model.DayOfWeek;
 import com.binarylab.rafroid.model.Exam;
 import com.binarylab.rafroid.model.ExamType;
+import com.binarylab.rafroid.services.DatabaseUpdateService;
+import com.binarylab.rafroid.services.DatabaseUpdateServiceMessage;
 import com.binarylab.rafroid.util.DateUtil;
 
 import java.text.SimpleDateFormat;
@@ -30,7 +34,7 @@ import io.realm.RealmQuery;
 //TODO: Some fields needs to be sorted out
 //TODO: Maybe add some animation on layout change
 //TODO: Implement Adapter for the recycler view
-public class VMExam extends BaseObservable {
+public class VMExam extends BaseObservable implements DatabaseUpdateServiceMessage{
 
     private Context mContext;
     private ExamType mExamType;
@@ -44,6 +48,7 @@ public class VMExam extends BaseObservable {
             mSubjectList;
     private ObservableList<Exam> mExamList;
     private ObservableInt mDayIndex, mClassroomsListIndex;
+    private ObservableBoolean isLoading = new ObservableBoolean(false);
     private String lecturer, subject, date, time;
 
     public VMExam(Context context, ExamType examType) {
@@ -187,6 +192,11 @@ public class VMExam extends BaseObservable {
         return mAdapter.getItemCount() <= 0;
     }
 
+    @Bindable
+    public ObservableBoolean getIsLoading(){
+        return isLoading;
+    }
+
     //Action Commands//
     //--------------------------------------------------------------------------------------------//
     public View.OnClickListener onSearchClicked() {
@@ -288,5 +298,73 @@ public class VMExam extends BaseObservable {
             mDatePicker.show();
 
         };
+    }
+
+    public void onRefresh(){
+        DatabaseUpdateService service = new DatabaseUpdateService(this, mContext);
+        service.execute();
+        isLoading.set(true);
+    }
+
+    @Override
+    public void setMessage(String message) {
+        //Ignore
+    }
+
+    @Override
+    public void notifyError() {
+        Toast.makeText(mContext, mContext.getString(R.string.error_connecting_to_server), Toast.LENGTH_SHORT).show();
+        isLoading.set(false);
+    }
+
+    @Override
+    public void onPostUpdate() {
+        ExamDAO dao = ExamDAO.getInstance();
+        RealmQuery<Exam> query;
+
+        if (mExamType == ExamType.EXAM)
+            query = dao.getExamQueryBuilder();
+        else
+            query = dao.getCurriculumQueryBuilder();
+
+        if (subject != null && !subject.isEmpty())
+            query = query.and().equalTo("testName", subject);
+
+        if (lecturer != null && !lecturer.isEmpty())
+            query = query.and().equalTo("professor", lecturer);
+
+        if (getSelectedClassroom() != null)
+            query = query.and().equalTo("classroom", getSelectedClassroom());
+
+        mExamList.clear();
+        mExamList.addAll(query.findAll());
+
+        if (getSelectedDay() != null) {
+            DayOfWeek selectedDay = DayOfWeek.valueOf(getSelectedDay());
+            for (Exam exam : new ArrayList<>(mExamList)) {
+                DayOfWeek day = DateUtil.getDayOfWeek(exam.getStartTime());
+
+                if (day != selectedDay)
+                    mExamList.remove(exam);
+            }
+        }
+
+        if (date != null && !date.isEmpty()) {
+            for (Exam exam : new ArrayList<>(mExamList)) {
+                if (!date.equals(mDateFormat.format(exam.getStartTime())))
+                    mExamList.remove(exam);
+            }
+        }
+
+        if (time != null && !time.isEmpty()) {
+            for (Exam exam : new ArrayList<>(mExamList)) {
+                if (!time.equals(mTimeFormat.format(exam.getStartTime())))
+                    mExamList.remove(exam);
+            }
+        }
+
+        mAdapter.notifyDataSetChanged();
+        notifyPropertyChanged(BR.noDataVisible);
+        isLoading.set(false);
     }
 }

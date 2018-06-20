@@ -1,5 +1,7 @@
 package com.binarylab.rafroid.dao;
 
+import android.content.SharedPreferences;
+
 import com.binarylab.rafroid.dto.ExamDTO;
 import com.binarylab.rafroid.dto.ExamsDTO;
 import com.binarylab.rafroid.model.DayOfWeek;
@@ -10,6 +12,7 @@ import com.binarylab.rafroid.util.DateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
@@ -58,11 +61,54 @@ public class ExamDAO {
         return realm.where(Exam.class).equalTo("type", ExamType.EXAM.toString()).findAll();
     }
 
+    public List<Exam> getAllExamsPersonalized(SharedPreferences sharedPreferences) {
+        Realm realm = Realm.getDefaultInstance();
+        ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
+        List<String> subjects = dao.getAllSubjectsPersonalized(sharedPreferences);
+        RealmQuery<Exam> query = realm.where(Exam.class).equalTo("type", ExamType.EXAM.toString());
+
+        query.and().beginGroup();
+        boolean isFirst = true;
+        for (String subject : subjects) {
+
+            if (isFirst) {
+                query.contains("testName", subject, Case.INSENSITIVE);
+                isFirst = false;
+            } else {
+                query.or().contains("testName", subject, Case.INSENSITIVE);
+            }
+        }
+        query.endGroup();
+
+        return query.findAll();
+    }
+
     public List<Exam> getAllCurriculums() {
         Realm realm = Realm.getDefaultInstance();
         return realm.where(Exam.class).equalTo("type", ExamType.CURRICULUM.toString()).findAll();
     }
 
+    public List<Exam> getAllCurriculumsPersonalized(SharedPreferences sharedPreferences) {
+        Realm realm = Realm.getDefaultInstance();
+        ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
+        List<String> subjects = dao.getAllSubjectsPersonalized(sharedPreferences);
+        RealmQuery<Exam> query = realm.where(Exam.class).equalTo("type", ExamType.CURRICULUM.toString());
+
+        query.and().beginGroup();
+        boolean isFirst = true;
+        for (String subject : subjects) {
+
+            if (isFirst) {
+                query.contains("testName", subject, Case.INSENSITIVE);
+                isFirst = false;
+            } else {
+                query.or().contains("testName", subject, Case.INSENSITIVE);
+            }
+        }
+        query.endGroup();
+
+        return query.findAll();
+    }
 
     public List<String> getAllDays() {
         List<String> set = new ArrayList<>();
@@ -103,7 +149,51 @@ public class ExamDAO {
         return Realm.getDefaultInstance().where(Exam.class).equalTo("type", ExamType.EXAM.toString());
     }
 
+    public RealmQuery<Exam> getExamQueryBuilderPersonalized(SharedPreferences sharedPreferences) {
+        Realm realm = Realm.getDefaultInstance();
+        ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
+        List<String> subjects = dao.getAllSubjectsPersonalized(sharedPreferences);
+        RealmQuery<Exam> query = realm.where(Exam.class).equalTo("type", ExamType.EXAM.toString());
+
+        query.and().beginGroup();
+        boolean isFirst = true;
+        for (String subject : subjects) {
+
+            if (isFirst) {
+                query.contains("testName", subject, Case.INSENSITIVE);
+                isFirst = false;
+            } else {
+                query.or().contains("testName", subject, Case.INSENSITIVE);
+            }
+        }
+        query.endGroup();
+
+        return query;
+    }
+
     public RealmQuery<Exam> getCurriculumQueryBuilder() {
         return Realm.getDefaultInstance().where(Exam.class).equalTo("type", ExamType.CURRICULUM.toString());
+    }
+
+    public RealmQuery<Exam> getCurriculumQueryBuilderPersonalized(SharedPreferences sharedPreferences) {
+        Realm realm = Realm.getDefaultInstance();
+        ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
+        List<String> subjects = dao.getAllSubjectsPersonalized(sharedPreferences);
+        RealmQuery<Exam> query = realm.where(Exam.class).equalTo("type", ExamType.CURRICULUM.toString());
+
+        query.and().beginGroup();
+        boolean isFirst = true;
+        for (String subject : subjects) {
+
+            if (isFirst) {
+                query.contains("testName", subject, Case.INSENSITIVE);
+                isFirst = false;
+            } else {
+                query.or().contains("testName", subject, Case.INSENSITIVE);
+            }
+        }
+        query.endGroup();
+
+        return query;
     }
 }

@@ -1,8 +1,6 @@
 package com.binarylab.rafroid.dao;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.binarylab.rafroid.dto.ClassDTO;
 import com.binarylab.rafroid.dto.ClassesDTO;
@@ -64,24 +62,42 @@ public class ClassScheduleDAO {
         return realm.where(ClassSchedule.class).findAll();
     }
 
-    public List<ClassSchedule> getAllPresonlized(SharedPreferences sharedPreferences){
+    public List<ClassSchedule> getAllPersonalized(SharedPreferences sharedPreferences) {
         Realm realm = Realm.getDefaultInstance();
-        RealmQuery<ClassSchedule> query = realm.where(ClassSchedule.class).and();
+        RealmQuery<ClassSchedule> query = realm.where(ClassSchedule.class);
 
         String stringGroups = sharedPreferences.getString(SharedPreferencesKeyStore.USER_GROUPS, null);
         Set<String> subjects = sharedPreferences.getStringSet(SharedPreferencesKeyStore.USER_SUBJECTS, null);
 
+        boolean isFirst = false;
         if(stringGroups != null && !stringGroups.isEmpty()){
-            query = query.beginGroup();
+            query = query.and().beginGroup();
 
             query = query.contains("studentGroups", stringGroups.split(" ")[0]);
             for (int i = 1; i < stringGroups.split(" ").length; i++)
                 query = query.or().contains("studentGroups", stringGroups.split(" ")[i]);
 
             query.endGroup();
+
+            isFirst = true;
         }
 
-        //TODO: needs to be extended by the subjects
+        if (subjects != null && subjects.size() > 0) {
+            if (isFirst)
+                query = query.or().beginGroup();
+            else
+                query = query.and().beginGroup();
+
+            isFirst = true;
+            for (String subj : subjects) {
+                if (isFirst) {
+                    query = query.contains("className", subj);
+                    isFirst = false;
+                } else query = query.or().contains("className", subj);
+            }
+
+            query.endGroup();
+        }
 
         return query.findAll();
     }
@@ -135,7 +151,93 @@ public class ClassScheduleDAO {
         return set;
     }
 
+    public List<String> getAllSubjectsPersonalized(SharedPreferences sharedPreferences) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmQuery<ClassSchedule> query = realm.where(ClassSchedule.class);
+
+        String stringGroups = sharedPreferences.getString(SharedPreferencesKeyStore.USER_GROUPS, null);
+        Set<String> subjects = sharedPreferences.getStringSet(SharedPreferencesKeyStore.USER_SUBJECTS, null);
+
+        boolean isFirst = false;
+        if (stringGroups != null && !stringGroups.isEmpty()) {
+            query = query.and().beginGroup();
+
+            query = query.contains("studentGroups", stringGroups.split(" ")[0]);
+            for (int i = 1; i < stringGroups.split(" ").length; i++)
+                query = query.or().contains("studentGroups", stringGroups.split(" ")[i]);
+
+            query.endGroup();
+
+            isFirst = true;
+        }
+
+        if (subjects != null && subjects.size() > 0) {
+            if (isFirst)
+                query = query.or().beginGroup();
+            else
+                query = query.and().beginGroup();
+
+            isFirst = true;
+            for (String subj : subjects) {
+                if (isFirst) {
+                    query = query.contains("className", subj);
+                    isFirst = false;
+                } else query = query.or().contains("className", subj);
+            }
+
+            query.endGroup();
+        }
+
+        List<String> set = new ArrayList<>();
+        for (ClassSchedule sch : query.distinct("className").findAll().sort("className")) {
+            set.add(sch.getClassName());
+        }
+
+        return set;
+    }
+
     public RealmQuery<ClassSchedule> getQueryBuilder(){
         return Realm.getDefaultInstance().where(ClassSchedule.class);
+    }
+
+
+    public RealmQuery<ClassSchedule> getQueryBuilderPersonalized(SharedPreferences sharedPreferences) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmQuery<ClassSchedule> query = realm.where(ClassSchedule.class);
+
+        String stringGroups = sharedPreferences.getString(SharedPreferencesKeyStore.USER_GROUPS, null);
+        Set<String> subjects = sharedPreferences.getStringSet(SharedPreferencesKeyStore.USER_SUBJECTS, null);
+
+        boolean isFirst = false;
+        if (stringGroups != null && !stringGroups.isEmpty()) {
+            query = query.and().beginGroup();
+
+            query = query.contains("studentGroups", stringGroups.split(" ")[0]);
+            for (int i = 1; i < stringGroups.split(" ").length; i++)
+                query = query.or().contains("studentGroups", stringGroups.split(" ")[i]);
+
+            query.endGroup();
+
+            isFirst = true;
+        }
+
+        if (subjects != null && subjects.size() > 0) {
+            if (isFirst)
+                query = query.or().beginGroup();
+            else
+                query = query.and().beginGroup();
+
+            isFirst = true;
+            for (String subj : subjects) {
+                if (isFirst) {
+                    query = query.contains("className", subj);
+                    isFirst = false;
+                } else query = query.or().contains("className", subj);
+            }
+
+            query.endGroup();
+        }
+
+        return query;
     }
 }

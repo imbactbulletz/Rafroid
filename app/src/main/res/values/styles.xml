@@ -22,8 +22,13 @@
 
         <!-- Menu Icon -->
         <item name="homeAsUpIndicator">@drawable/ic_menu</item>
+        <item name="android:buttonStyle">@style/AppThemeDark.ButtonColor</item>
 
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="AppThemeDark.ButtonColor" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
 </resources>

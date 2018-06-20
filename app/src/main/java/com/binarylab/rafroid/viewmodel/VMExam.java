@@ -3,12 +3,14 @@ package com.binarylab.rafroid.viewmodel;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -24,6 +26,7 @@ import com.binarylab.rafroid.model.ExamType;
 import com.binarylab.rafroid.services.DatabaseUpdateService;
 import com.binarylab.rafroid.services.DatabaseUpdateServiceMessage;
 import com.binarylab.rafroid.util.DateUtil;
+import com.binarylab.rafroid.util.SharedPreferencesKeyStore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,10 +62,19 @@ public class VMExam extends BaseObservable implements DatabaseUpdateServiceMessa
         ExamDAO dao = ExamDAO.getInstance();
 
         mExamList = new ObservableArrayList<>();
-        if (examType == ExamType.EXAM)
-            mExamList.addAll(dao.getAllExams());
-        else if (examType == ExamType.CURRICULUM)
-            mExamList.addAll(dao.getAllCurriculums());
+        if (examType == ExamType.EXAM) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+                mExamList.addAll(dao.getAllExams());
+            else
+                mExamList.addAll(dao.getAllExamsPersonalized(PreferenceManager.getDefaultSharedPreferences(context)));
+        } else if (examType == ExamType.CURRICULUM) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+                mExamList.addAll(dao.getAllCurriculums());
+            else
+                mExamList.addAll(dao.getAllCurriculumsPersonalized(PreferenceManager.getDefaultSharedPreferences(context)));
+        }
         mAdapter = new ExamAdapter(mExamList, context);
 
         //Filling the Day spinner
@@ -204,10 +216,21 @@ public class VMExam extends BaseObservable implements DatabaseUpdateServiceMessa
             ExamDAO dao = ExamDAO.getInstance();
             RealmQuery<Exam> query;
 
-            if (mExamType == ExamType.EXAM)
-                query = dao.getExamQueryBuilder();
-            else
-                query = dao.getCurriculumQueryBuilder();
+
+            if (mExamType == ExamType.EXAM) {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+                    query = dao.getExamQueryBuilder();
+                else
+                    query = dao.getExamQueryBuilderPersonalized(preferences);
+            } else {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+                    query = dao.getCurriculumQueryBuilder();
+                else
+                    query = dao.getCurriculumQueryBuilderPersonalized(preferences);
+            }
+
 
             if (subject != null && !subject.isEmpty())
                 query = query.and().equalTo("testName", subject);
@@ -322,10 +345,19 @@ public class VMExam extends BaseObservable implements DatabaseUpdateServiceMessa
         ExamDAO dao = ExamDAO.getInstance();
         RealmQuery<Exam> query;
 
-        if (mExamType == ExamType.EXAM)
-            query = dao.getExamQueryBuilder();
-        else
-            query = dao.getCurriculumQueryBuilder();
+        if (mExamType == ExamType.EXAM) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+                query = dao.getExamQueryBuilder();
+            else
+                query = dao.getExamQueryBuilderPersonalized(preferences);
+        } else {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+                query = dao.getCurriculumQueryBuilder();
+            else
+                query = dao.getCurriculumQueryBuilderPersonalized(preferences);
+        }
 
         if (subject != null && !subject.isEmpty())
             query = query.and().equalTo("testName", subject);

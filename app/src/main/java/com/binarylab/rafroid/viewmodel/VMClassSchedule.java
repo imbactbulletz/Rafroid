@@ -30,7 +30,7 @@ import io.realm.RealmQuery;
 
 //TODO: Some fields needs to be sorted out
 //TODO: Maybe add some animation on layout change
-public class VMClassSchedule extends BaseObservable implements DatabaseUpdateServiceMessage{
+public class VMClassSchedule extends BaseObservable implements DatabaseUpdateServiceMessage {
 
     private Context mContext;
 
@@ -77,10 +77,10 @@ public class VMClassSchedule extends BaseObservable implements DatabaseUpdateSer
 
         mClassScheduleList = new ObservableArrayList<>();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if(!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+        if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
             mClassScheduleList.addAll(dao.getAll());
-        else{
-            mClassScheduleList.addAll(dao.getAllPresonlized(preferences));
+        else {
+            mClassScheduleList.addAll(dao.getAllPersonalized(preferences));
         }
         mClassScheduleAdapter = new ClassScheduleAdapter(mClassScheduleList, mContext);
     }
@@ -207,7 +207,7 @@ public class VMClassSchedule extends BaseObservable implements DatabaseUpdateSer
     }
 
     @Bindable
-    public ObservableBoolean getIsLoading(){
+    public ObservableBoolean getIsLoading() {
         return isLoading;
     }
 
@@ -216,16 +216,21 @@ public class VMClassSchedule extends BaseObservable implements DatabaseUpdateSer
     public View.OnClickListener onSearchClicked() {
         return v -> {
             ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
-            RealmQuery<ClassSchedule> query = dao.getQueryBuilder();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            RealmQuery<ClassSchedule> query;
+            if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+                query = dao.getQueryBuilder();
+            else
+                query = dao.getQueryBuilderPersonalized(preferences);
 
-            if(subject != null && !subject.isEmpty())
+            if (subject != null && !subject.isEmpty())
                 query = query.and().equalTo("className", subject);
 
-            if(getSelectedTypeItem() != null)
+            if (getSelectedTypeItem() != null)
                 query = query.and().equalTo("type", getSelectedTypeItem());
 
-            if(lecturer != null && !lecturer.isEmpty())
-                query = query.and().equalTo("lecturer",lecturer);
+            if (lecturer != null && !lecturer.isEmpty())
+                query = query.and().equalTo("lecturer", lecturer);
 
             if (groups != null && !groups.isEmpty()) {
                 query = query.and().beginGroup();
@@ -237,13 +242,13 @@ public class VMClassSchedule extends BaseObservable implements DatabaseUpdateSer
                 query.endGroup();
             }
 
-            if(getSelectedDayOfWeek() != null)
+            if (getSelectedDayOfWeek() != null)
                 query = query.and().equalTo("dayOfWeek", getSelectedDayOfWeek());
 
-            if(getSelectedClassroom() != null)
+            if (getSelectedClassroom() != null)
                 query = query.and().equalTo("classroom", getSelectedClassroom());
 
-            if(time != null && !time.isEmpty())
+            if (time != null && !time.isEmpty())
                 query = query.and().equalTo("startTime", time);
 
             mClassScheduleList.clear();
@@ -260,7 +265,7 @@ public class VMClassSchedule extends BaseObservable implements DatabaseUpdateSer
         return v -> setInputVisible(true);
     }
 
-    public View.OnClickListener onTimeClicked(){
+    public View.OnClickListener onTimeClicked() {
         return v -> {
             Calendar mcurrentTime = Calendar.getInstance();
             int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -283,7 +288,7 @@ public class VMClassSchedule extends BaseObservable implements DatabaseUpdateSer
         };
     }
 
-    public void onRefresh(){
+    public void onRefresh() {
         DatabaseUpdateService service = new DatabaseUpdateService(this, mContext);
         service.execute();
         isLoading.set(true);
@@ -303,16 +308,21 @@ public class VMClassSchedule extends BaseObservable implements DatabaseUpdateSer
     @Override
     public void onPostUpdate() {
         ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
-        RealmQuery<ClassSchedule> query = dao.getQueryBuilder();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        RealmQuery<ClassSchedule> query;
+        if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+            query = dao.getQueryBuilder();
+        else
+            query = dao.getQueryBuilderPersonalized(preferences);
 
-        if(subject != null && !subject.isEmpty())
+        if (subject != null && !subject.isEmpty())
             query = query.and().equalTo("className", subject);
 
-        if(getSelectedTypeItem() != null)
+        if (getSelectedTypeItem() != null)
             query = query.and().equalTo("type", getSelectedTypeItem());
 
-        if(lecturer != null && !lecturer.isEmpty())
-            query = query.and().equalTo("lecturer",lecturer);
+        if (lecturer != null && !lecturer.isEmpty())
+            query = query.and().equalTo("lecturer", lecturer);
 
         if (groups != null && !groups.isEmpty()) {
             query = query.and().beginGroup();
@@ -324,13 +334,13 @@ public class VMClassSchedule extends BaseObservable implements DatabaseUpdateSer
             query.endGroup();
         }
 
-        if(getSelectedDayOfWeek() != null)
+        if (getSelectedDayOfWeek() != null)
             query = query.and().equalTo("dayOfWeek", getSelectedDayOfWeek());
 
-        if(getSelectedClassroom() != null)
+        if (getSelectedClassroom() != null)
             query = query.and().equalTo("classroom", getSelectedClassroom());
 
-        if(time != null && !time.isEmpty())
+        if (time != null && !time.isEmpty())
             query = query.and().equalTo("startTime", time);
 
         mClassScheduleList.clear();

@@ -1,19 +1,17 @@
 package com.binarylab.rafroid.dao;
 
+import android.content.SharedPreferences;
+
 import com.binarylab.rafroid.dto.ConsultationDTO;
 import com.binarylab.rafroid.dto.ConsultationsDTO;
-import com.binarylab.rafroid.dto.ExamDTO;
-import com.binarylab.rafroid.dto.ExamsDTO;
 import com.binarylab.rafroid.model.Consultation;
 import com.binarylab.rafroid.model.DayOfWeek;
-import com.binarylab.rafroid.model.Exam;
-import com.binarylab.rafroid.model.ExamType;
 import com.binarylab.rafroid.util.DateUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
@@ -62,6 +60,28 @@ public class ConsultationDAO {
         return realm.where(Consultation.class).findAll();
     }
 
+    public List<Consultation> getAllConsultationsPersonalized(SharedPreferences sharedPreferences) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmQuery<Consultation> query = realm.where(Consultation.class);
+        ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
+        List<String> subjects = dao.getAllSubjectsPersonalized(sharedPreferences);
+
+        query.and().beginGroup();
+        boolean isFirst = true;
+        for (String subject : subjects) {
+
+            if (isFirst) {
+                query.contains("className", subject, Case.INSENSITIVE);
+                isFirst = false;
+            } else {
+                query.or().contains("className", subject, Case.INSENSITIVE);
+            }
+        }
+        query.endGroup();
+
+        return query.findAll();
+    }
+
     public List<String> getAllDays() {
         List<String> set = new ArrayList<>();
         for (DayOfWeek dayofWeek : DayOfWeek.values())
@@ -99,5 +119,27 @@ public class ConsultationDAO {
 
     public RealmQuery<Consultation> getConsultationQueryBuilder(){
         return Realm.getDefaultInstance().where(Consultation.class);
+    }
+
+    public RealmQuery<Consultation> getConsultationPersonalizedQueryBuilder(SharedPreferences sharedPreferences) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmQuery<Consultation> query = realm.where(Consultation.class);
+        ClassScheduleDAO dao = ClassScheduleDAO.getInstance();
+        List<String> subjects = dao.getAllSubjectsPersonalized(sharedPreferences);
+
+        query.and().beginGroup();
+        boolean isFirst = true;
+        for (String subject : subjects) {
+
+            if (isFirst) {
+                query.contains("className", subject, Case.INSENSITIVE);
+                isFirst = false;
+            } else {
+                query.or().contains("className", subject, Case.INSENSITIVE);
+            }
+        }
+        query.endGroup();
+
+        return query;
     }
 }

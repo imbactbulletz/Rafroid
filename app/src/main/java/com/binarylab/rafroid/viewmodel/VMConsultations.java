@@ -3,14 +3,15 @@ package com.binarylab.rafroid.viewmodel;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.binarylab.rafroid.model.DayOfWeek;
 import com.binarylab.rafroid.services.DatabaseUpdateService;
 import com.binarylab.rafroid.services.DatabaseUpdateServiceMessage;
 import com.binarylab.rafroid.util.DateUtil;
+import com.binarylab.rafroid.util.SharedPreferencesKeyStore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,8 +54,12 @@ public class VMConsultations extends BaseObservable implements DatabaseUpdateSer
 
 
         mConsultationList = new ObservableArrayList<>();
-        mConsultationList.addAll(dao.getAllConsultations());
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+            mConsultationList.addAll(dao.getAllConsultations());
+        else {
+            mConsultationList.addAll(dao.getAllConsultationsPersonalized(preferences));
+        }
         mAdapter = new ConsultationsAdapter(mConsultationList, context);
 
 
@@ -185,7 +191,13 @@ public class VMConsultations extends BaseObservable implements DatabaseUpdateSer
     public View.OnClickListener onSearchClicked() {
         return v -> {
             ConsultationDAO dao = ConsultationDAO.getInstance();
-            RealmQuery<Consultation> query = dao.getConsultationQueryBuilder();
+            RealmQuery<Consultation> query;
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+                query = dao.getConsultationQueryBuilder();
+            else {
+                query = dao.getConsultationPersonalizedQueryBuilder(preferences);
+            }
 
             if(subject != null && !subject.isEmpty()){
                 query = query.and().equalTo("className", subject);
@@ -268,7 +280,13 @@ public class VMConsultations extends BaseObservable implements DatabaseUpdateSer
     @Override
     public void onPostUpdate() {
         ConsultationDAO dao = ConsultationDAO.getInstance();
-        RealmQuery<Consultation> query = dao.getConsultationQueryBuilder();
+        RealmQuery<Consultation> query;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        if (!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+            query = dao.getConsultationQueryBuilder();
+        else {
+            query = dao.getConsultationPersonalizedQueryBuilder(preferences);
+        }
 
         if(subject != null && !subject.isEmpty()){
             query = query.and().equalTo("className", subject);

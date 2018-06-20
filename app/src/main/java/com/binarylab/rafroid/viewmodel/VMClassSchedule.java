@@ -2,12 +2,14 @@ package com.binarylab.rafroid.viewmodel;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,7 @@ import com.binarylab.rafroid.dao.ClassScheduleDAO;
 import com.binarylab.rafroid.model.ClassSchedule;
 import com.binarylab.rafroid.services.DatabaseUpdateService;
 import com.binarylab.rafroid.services.DatabaseUpdateServiceMessage;
+import com.binarylab.rafroid.util.SharedPreferencesKeyStore;
 
 import java.util.Calendar;
 
@@ -73,7 +76,12 @@ public class VMClassSchedule extends BaseObservable implements DatabaseUpdateSer
         mSubjectList.addAll(dao.getAllSubjects());
 
         mClassScheduleList = new ObservableArrayList<>();
-        mClassScheduleList.addAll(dao.getAll());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if(!preferences.getBoolean(SharedPreferencesKeyStore.USER_FILTER, false))
+            mClassScheduleList.addAll(dao.getAll());
+        else{
+            mClassScheduleList.addAll(dao.getAllPresonlized(preferences));
+        }
         mClassScheduleAdapter = new ClassScheduleAdapter(mClassScheduleList, mContext);
     }
 

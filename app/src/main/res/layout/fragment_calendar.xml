@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            app:currentDayOfMonthColor="@color/white"
+            app:currentDayOfMonthColor="@color/colorGreen"
             app:calendarBackgroundColor="@color/colorGrayLight"
             app:selectedDayBackgroundColor="@color/colorOker">
         </com.stacktips.view.CustomCalendarView>

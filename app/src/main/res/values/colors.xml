@@ -17,5 +17,5 @@
     <color name='holidayColor'>@color/colorGrayLight</color>
     <color name='curriculumColor'>#ff8838</color>
     <color name='examColor'>#007fff</color>
-
+    <color name="colorGreen">#27ff00</color>
 </resources>

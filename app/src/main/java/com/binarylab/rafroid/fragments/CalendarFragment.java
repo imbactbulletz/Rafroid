@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.Locale;
 @SuppressLint("ValidFragment")
 public class CalendarFragment extends TabFragment {
     FragmentCalendarBinding mBinding;
+    public static CustomCalendarView customCalendarView;
     public static CalendarFragment newInstance(){
         return new CalendarFragment();
     }
@@ -38,7 +40,7 @@ public class CalendarFragment extends TabFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_calendar, container, false);
 
-        CustomCalendarView customCalendarView = mBinding.getRoot().findViewById(R.id.custom_calendar_view);
+        customCalendarView = mBinding.getRoot().findViewById(R.id.custom_calendar_view);
 
 
 
@@ -46,10 +48,10 @@ public class CalendarFragment extends TabFragment {
         Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
         CalendarDecorator mdc = new CalendarDecorator();
 
+
         List decorators = new ArrayList<>();
         decorators.add(mdc);
         customCalendarView.setDecorators(decorators);
-        customCalendarView.setShowOverflowDate(false);
         customCalendarView.refreshCalendar(currentCalendar);
         return mBinding.getRoot();
     }

@@ -124,4 +124,9 @@
     <string name="personalization">Presonalizacija</string>
     <string name="subjects">Predmeti</string>
     <string name="filter_personalization">Personalizacija filtera</string>
+
+    <!--Strings related to Calendar-->
+    <string name="curriculums">Kolokvijumska nedelja:</string>
+    <string name="finals">Ispitni rok:</string>
+    <string name="vacant_days">Neradni dan:</string>
 </resources>

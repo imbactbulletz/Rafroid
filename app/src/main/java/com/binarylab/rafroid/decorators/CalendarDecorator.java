@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.binarylab.rafroid.R;
 import com.binarylab.rafroid.dao.CalendarDAO;
+import com.binarylab.rafroid.listeners.SwipeListener;
 import com.binarylab.rafroid.model.Calendar;
 import com.binarylab.rafroid.util.DateUtil;
 import com.stacktips.view.DayDecorator;
@@ -32,6 +33,7 @@ public class CalendarDecorator implements DayDecorator {
 
     @Override
     public void decorate(DayView dayView) {
+        dayView.setOnTouchListener(new SwipeListener() );
         Date decoraterDate = DateUtil.getZeroTimeDate(dayView.getDate());
         java.util.Calendar calendar = java.util.Calendar.getInstance();
 
@@ -48,11 +50,11 @@ public class CalendarDecorator implements DayDecorator {
 
                 if(calendar.get(java.util.Calendar.DAY_OF_WEEK) == java.util.Calendar.SATURDAY ||
                         calendar.get(java.util.Calendar.DAY_OF_WEEK) == java.util.Calendar.SUNDAY){
-                    break;
+                    return;
                 }
                 else{
                      dayView.setBackgroundResource(R.color.semesterColor);
-                     break;
+                     return;
                 }
             }
         }
@@ -64,7 +66,7 @@ public class CalendarDecorator implements DayDecorator {
             if( decoraterDate.equals(startInterval) || decoraterDate.equals(endInterval) ||
                     (decoraterDate.after(startInterval) && decoraterDate.before(endInterval))){
                 dayView.setBackgroundResource(R.color.holidayColor);
-                break;
+                return;
             }
         }
 
@@ -75,7 +77,7 @@ public class CalendarDecorator implements DayDecorator {
             if( decoraterDate.equals(startInterval) || decoraterDate.equals(endInterval) ||
                     (decoraterDate.after(startInterval) && decoraterDate.before(endInterval))){
                 dayView.setBackgroundResource(R.color.curriculumColor);
-                break;
+                return;
             }
         }
 
@@ -86,7 +88,7 @@ public class CalendarDecorator implements DayDecorator {
             if( decoraterDate.equals(startInterval) || decoraterDate.equals(endInterval) ||
                     (decoraterDate.after(startInterval) && decoraterDate.before(endInterval))){
                 dayView.setBackgroundResource(R.color.examColor);
-                break;
+                return;
             }
         }
 

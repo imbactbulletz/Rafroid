@@ -6,6 +6,8 @@ import com.binarylab.rafroid.model.Calendar;
 import com.binarylab.rafroid.model.CalendarType;
 import com.binarylab.rafroid.util.DateUtil;
 
+import java.util.List;
+
 import io.realm.Realm;
 
 public class CalendarDAO {
@@ -44,4 +46,19 @@ public class CalendarDAO {
 
     }
 
+    public List<Calendar> getAllSemesterIntervals(){
+        return Realm.getDefaultInstance().where(Calendar.class).equalTo("type", CalendarType.SEMESTER.toString()).findAll();
+    }
+
+    public List<Calendar> getAllHolidayIntervals(){
+        return Realm.getDefaultInstance().where(Calendar.class).equalTo("type", CalendarType.HOLIDAY.toString()).findAll();
+    }
+
+    public List<Calendar> getAllCurriculumIntervals(){
+        return Realm.getDefaultInstance().where(Calendar.class).equalTo("type", CalendarType.CURRICULUMS.toString()).findAll();
+    }
+
+    public List<Calendar> getAllExamIntervals(){
+        return Realm.getDefaultInstance().where(Calendar.class).equalTo("type", CalendarType.EXAMS.toString()).findAll();
+    }
 }

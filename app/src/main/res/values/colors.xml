@@ -13,4 +13,9 @@
     <color name="colorOker">#fdc16c</color>
     <color name="colorGrayLight">#828282</color>
     <color name="colorTransparent">#00FFFFFF</color>
+    <color name='semesterColor'>#ffffff</color>
+    <color name='holidayColor'>@color/colorGrayLight</color>
+    <color name='curriculumColor'>#ff8838</color>
+    <color name='examColor'>#007fff</color>
+
 </resources>

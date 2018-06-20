@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
+import com.binarylab.rafroid.fragments.CalendarFragment;
 import com.binarylab.rafroid.fragments.ClassScheduleFragment;
 import com.binarylab.rafroid.fragments.ConsultationsFragment;
 import com.binarylab.rafroid.fragments.CurriculumFragment;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.nav_teaching_schedule:
                     getSupportActionBar().setTitle(R.string.teaching_schedule);
+                    mFragmentToSet = CalendarFragment.newInstance();
                     break;
 
                 case R.id.nav_consultation_schedule:

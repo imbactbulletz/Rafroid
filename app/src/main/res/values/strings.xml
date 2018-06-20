@@ -129,4 +129,13 @@
     <string name="curriculums">Kolokvijumska nedelja:</string>
     <string name="finals">Ispitni rok:</string>
     <string name="vacant_days">Neradni dan:</string>
+
+
+    <!--Strings related to About-->
+    <string name="aboutContent">Ova aplikacija je izradjena od strane studenata Racunarskog fakulteta tokom takmicenja "Rafroid", na kojem su studenti imali zadatak da naprave mobilnu verziju rasporeda fakultetskih aktivnosti. Kontakt informacije Racunarskog fakulteta: </string>
+    <string name="aboutPhoneTextView">011 2627613</string>
+    <string name="aboutMailTextView">sekretarijat@raf.rs</string>
+    <string name="aboutApplicationMadeBy">Aplikaciju izradili:</string>
+    <string name="aboutDejanNameTextView">Dejan Radmanović</string>
+    <string name="aboutStefanNameTextView">Stefan Cvetić</string>
 </resources>

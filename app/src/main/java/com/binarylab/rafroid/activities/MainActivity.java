@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.binarylab.rafroid.R;
+import com.binarylab.rafroid.fragments.AboutFragment;
 import com.binarylab.rafroid.fragments.CalendarFragment;
 import com.binarylab.rafroid.fragments.ClassScheduleFragment;
 import com.binarylab.rafroid.fragments.ConsultationsFragment;
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_about:
+                    mFragmentToSet = AboutFragment.newInstance();
                     getSupportActionBar().setTitle(R.string.about);
                     break;
 

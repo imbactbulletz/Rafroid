@@ -11,6 +11,10 @@
         <item name="homeAsUpIndicator">@drawable/ic_menu</item>
 
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+
+
+        <!--Custom attributes -->
+        <item name="cardTitleColor">@color/colorBlack</item>
     </style>
 
     <!-- Dark application theme. -->
@@ -25,6 +29,10 @@
         <item name="android:buttonStyle">@style/AppThemeDark.ButtonColor</item>
 
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+
+
+        <!--Custom attributes -->
+        <item name="cardTitleColor">@color/colorWhite</item>
     </style>
 
     <style name="AppThemeDark.ButtonColor" parent="@android:style/Widget.Button">
